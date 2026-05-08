@@ -7,142 +7,49 @@ import { AttendanceHeatmap } from "@/components/dashboard/AttendanceHeatmap";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
 import { RevenueVsSpendingChart } from "@/components/dashboard/RevenueVsSpending";
 import { StatRow } from "@/components/dashboard/StartRow";
-import { Users, GraduationCap, DollarSign, Calendar, UserPlus, CheckCircle, CreditCard, AlertCircle, MessageSquare } from 'lucide-react';
+import { 
+  useStatCardsData, 
+  useRevenueVsSpendingData, 
+  useFeeData,
+  useTeachersData,
+  useLeaveRequestsData,
+  useSubjectPerformanceData,
+  useAttendanceHeatmapData,
+  useActivityFeedData
+} from "@/hooks/useDashboard";
+import { Users, GraduationCap, DollarSign, Calendar } from 'lucide-react';
 
 export const Dashboard: React.FC = () => {
-  // 1. Stat Row Data
-  const statCardsData: any[] = [
-    {
-      icon: <Users size={20} />,
-      value: 48,
-      label: "Total teachers",
-      trend: { type: "up", value: "3" },
-      sparkData: [8, 12, 10, 14, 18],
-      iconBgColor: "bg-purple-100",
-    },
-    {
-      icon: <GraduationCap size={20} />,
-      value: 1240,
-      label: "Total students",
-      trend: { type: "up", value: "2.4%" },
-      sparkData: [9, 13, 11, 16, 20],
-      iconBgColor: "bg-green-100",
-    },
-    {
-      icon: <DollarSign size={20} />,
-      value: "PKR 184k",
-      label: "Monthly revenue",
-      trend: { type: "up", value: "8.1%" },
-      sparkData: [10, 14, 12, 17, 20],
-      iconBgColor: "bg-amber-100",
-    },
-    {
-      icon: <Calendar size={20} />,
-      value: "94.2%",
-      label: "Attendance rate today",
-      trend: { type: "down", value: "12 pending" },
-      sparkData: [16, 20, 18, 19, 17],
-      iconBgColor: "bg-red-100",
-    },
-  ];
+  // Fetch all data using custom hooks
+  const { data: statsData, loading: statsLoading } = useStatCardsData();
+  const { data: revenueData, loading: revenueLoading } = useRevenueVsSpendingData();
+  const { data: feeData, loading: feeLoading } = useFeeData();
+  const { data: teachersData, loading: teachersLoading } = useTeachersData();
+  const { data: leaveRequestsData, loading: leaveLoading } = useLeaveRequestsData();
+  const { data: subjectPerfData, loading: subjectPerfLoading } = useSubjectPerformanceData();
+  const { data: attendanceData, loading: attendanceLoading } = useAttendanceHeatmapData();
+  const { data: activityData, loading: activityLoading } = useActivityFeedData();
 
-  // 2. Revenue vs Spending Data
-  const revenue = [52, 60, 56, 65, 62, 70, 76, 80];
-  const spending = [38, 44, 36, 46, 40, 48, 50, 44];
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"];
+  // Map data to component props with icons
+  const statCardsWithIcons = statsData.map((stat, idx) => {
+    const icons = [
+      <Users size={20} key="users" />,
+      <GraduationCap size={20} key="graduation" />,
+      <DollarSign size={20} key="dollar" />,
+      <Calendar size={20} key="calendar" />,
+    ];
+    const bgColors = ["bg-purple-100", "bg-green-100", "bg-amber-100", "bg-red-100"];
+    
+    return {
+      ...stat,
+      icon: icons[idx],
+      iconBgColor: bgColors[idx],
+    };
+  });
 
-  // 3. FeeDonut Data
-  const total = 1240;
-  const paid = 634;
-  const pending = 372;
-  const overdue = 234;
-
-  // 4. Teachers Table Data
-  const teachers: Array<{name: string; subject: string; status: "Active" | "On Leave"}> = [
-    { name: "Dr. Ayesha M.", subject: "Mathematics", status: "Active" },
-    { name: "Mr. Omar F.", subject: "Physics", status: "Active" },
-    { name: "Ms. Sana R.", subject: "English", status: "On Leave" },
-    { name: "Dr. Fatima N.", subject: "Biology", status: "Active" },
-    { name: "Ms. Hina B.", subject: "CS", status: "Active" },
-  ];
-
-  // 5. Leave Requests
-  const leaveRequests = [
-    { name: "Mr. Bilal C.", type: "Medical", duration: "5 days", date: "Aug 20" },
-    { name: "Ms. Sana R.", type: "Personal", duration: "2 days", date: "Aug 22" },
-    { name: "Dr. Ayesha M.", type: "Casual", duration: "1 day", date: "Aug 25" },
-  ];
-
-  // 7. Subject Performance
-  const subjectPerf = [
-    { name: "Mathematics", percent: 82, color: "#7F77DD" },
-    { name: "Physics", percent: 74, color: "#1D9E75" },
-    { name: "Biology", percent: 88, color: "#639922" },
-    { name: "English", percent: 66, color: "#EF9F27" },
-  ];
-
-  // 8. Attendance Heatmap
-  const heatmapWeeks = [
-    {
-      label: "Wk1",
-      days: ["M", "T", "W", "T", "F", "S", "S"],
-      values: ["#97C459", "#639922", "#97C459", "#C0DD97", "#F09595", "#E8E8EE", "#E8E8EE"]
-    },
-    {
-      label: "Wk2",
-      days: ["M", "T", "W", "T", "F", "S", "S"],
-      values: ["#639922", "#639922", "#639922", "#97C459", "#EF9F27", "#E8E8EE", "#E8E8EE"]
-    },
-    {
-      label: "Wk3",
-      days: ["M", "T", "W", "T", "F", "S", "S"],
-      values: ["#97C459", "#C0DD97", "#639922", "#639922", "#F09595", "#E8E8EE", "#E8E8EE"]
-    },
-    {
-      label: "Wk4",
-      days: ["M", "T", "W", "T", "F", "S", "S"],
-      values: ["#639922", "#97C459", "#97C459", "#C0DD97", "#E24B4A", "#E8E8EE", "#E8E8EE"]
-    },
-  ];
-
-  // 9. Activity Feed
-  const activityFeed: any[] = [
-    {
-      icon: <UserPlus size={16} />,
-      action: <>New student <strong>Ali Raza</strong> enrolled in XI-A</>,
-      time: "2 min ago",
-      color: "#534AB7",
-      bg: "#EEEDFE",
-    },
-    {
-      icon: <CheckCircle size={16} />,
-      action: <>Leave approved for <strong>Ms. Hina B.</strong></>,
-      time: "11 min ago",
-      color: "#3B6D11",
-      bg: "#EAF3DE",
-    },
-    {
-      icon: <CreditCard size={16} />,
-      action: <>Fee payment received — Hamza Tariq · PKR 12,500</>,
-      time: "34 min ago",
-      color: "#854F0B",
-      bg: "#FAEEDA",
-    },
-    {
-      icon: <AlertCircle size={16} />,
-      action: <>Exam result uploaded — Mid-term Biology Class XI</>,
-      time: "1 hr ago",
-      color: "#A32D2D",
-      bg: "#FCEBEB",
-    },
-    {
-      icon: <MessageSquare size={16} />,
-      action: <>New message from <strong>Dr. Ayesha Malik</strong></>,
-      time: "2 hr ago",
-      color: "#185FA5",
-      bg: "#E6F1FB",
-    },
-  ];
+  // Check if all data is loading
+  const isLoading = statsLoading || revenueLoading || feeLoading || teachersLoading || 
+                    leaveLoading || subjectPerfLoading || attendanceLoading || activityLoading;
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8">
@@ -153,41 +60,65 @@ export const Dashboard: React.FC = () => {
           <p className="text-slate-600">Welcome back! Here's your academic portal overview.</p>
         </div>
 
-        {/* Stats Row */}
-        <div className="mb-8">
-          <StatRow stats={statCardsData} />
-        </div>
-
-        {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div className="lg:col-span-2">
-            <RevenueVsSpendingChart revenue={revenue} spending={spending} months={months} />
+        {/* Loading State */}
+        {isLoading && (
+          <div className="flex items-center justify-center py-12">
+            <div className="text-slate-500">Loading dashboard data...</div>
           </div>
-          <div>
-            <FeeDonutChart total={total} paid={paid} pending={pending} overdue={overdue} />
-          </div>
-        </div>
+        )}
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div className="lg:col-span-2">
-            <TeachersTable teachers={teachers} />
-          </div>
-          <div>
-            <LeaveRequestsCard pending={leaveRequests} />
-          </div>
-        </div>
+        {!isLoading && (
+          <>
+            {/* Stats Row */}
+            <div className="mb-8">
+              <StatRow stats={statCardsWithIcons} />
+            </div>
 
-        {/* Performance and Attendance */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <SubjectPerformanceGauges subjects={subjectPerf} />
-          <AttendanceHeatmap weeks={heatmapWeeks} />
-        </div>
+            {/* Charts Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+              <div className="lg:col-span-2">
+                {revenueData && (
+                  <RevenueVsSpendingChart 
+                    revenue={revenueData.revenue} 
+                    spending={revenueData.spending} 
+                    months={revenueData.months} 
+                  />
+                )}
+              </div>
+              <div>
+                {feeData && (
+                  <FeeDonutChart 
+                    total={feeData.total} 
+                    paid={feeData.paid} 
+                    pending={feeData.pending} 
+                    overdue={feeData.overdue} 
+                  />
+                )}
+              </div>
+            </div>
 
-        {/* Activity Feed */}
-        <div>
-          <ActivityFeed feed={activityFeed} />
-        </div>
+            {/* Main Content Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+              <div className="lg:col-span-2">
+                <TeachersTable teachers={teachersData} />
+              </div>
+              <div>
+                <LeaveRequestsCard pending={leaveRequestsData} />
+              </div>
+            </div>
+
+            {/* Performance and Attendance */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+              <SubjectPerformanceGauges subjects={subjectPerfData} />
+              <AttendanceHeatmap weeks={attendanceData} />
+            </div>
+
+            {/* Activity Feed */}
+            <div>
+              <ActivityFeed feed={activityData} />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
