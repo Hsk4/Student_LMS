@@ -1,17 +1,5 @@
-import React from "react";
-
-export interface StatCardProps {
-  icon: React.ReactNode;
-  value: string | number;
-  label: string;
-  trend?: {
-    type: "up" | "down" | "none";
-    value: string;
-  };
-  sparkData?: number[];
-  children?: React.ReactNode;
-  iconBgColor?: string; // New prop for custom icon background
-}
+import React from 'react'
+import type { StatCardProps, MiniSparklineProps } from '@/types/components'
 
 export const StatCard: React.FC<StatCardProps> = ({
   icon,
@@ -55,12 +43,9 @@ export const StatCard: React.FC<StatCardProps> = ({
       {children}
       {sparkData && <MiniSparkline data={sparkData} />}
     </div>
-  );
-};
-
-interface MiniSparklineProps {
-  data: number[];
+  )
 }
+
 export const MiniSparkline: React.FC<MiniSparklineProps> = ({ data }) => {
   if (!data.length) return null;
   const max = Math.max(...data), min = Math.min(...data);

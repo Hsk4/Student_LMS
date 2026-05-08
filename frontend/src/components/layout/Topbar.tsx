@@ -1,8 +1,5 @@
-import { Menu, Search, Bell, Plus } from 'lucide-react';
-
-interface TopbarProps {
-  onMenuClick?: () => void;
-}
+import { Menu, Search, Bell, Plus } from 'lucide-react'
+import type { TopbarProps } from '@/types/components'
 
 export default function Topbar({ onMenuClick }: TopbarProps) {
   const today = new Date();

@@ -1,14 +1,9 @@
-import { useState } from "react";
-type AvatarProps = {
-    
-    src? : string;
-    alt? : string;
-    size? : number;
-}
+import React, { useState } from 'react'
+import type { AvatarProps } from '@/types/components'
 
-const DEFAULT_AVATAR = "https://via.placeholder.com/150?text=User";
+const DEFAULT_AVATAR = 'https://via.placeholder.com/150?text=User'
 
-const Avatar  : React.FC<AvatarProps> = ({
+const Avatar: React.FC<AvatarProps> = ({
     src ,
     alt = "avatar",
     size = 150

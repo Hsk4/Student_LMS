@@ -1,14 +1,5 @@
-import React from "react";
-
-export interface SubjectPerf {
-  name: string;
-  percent: number;
-  color: string;
-}
-
-export interface SubjectPerformanceGaugesProps {
-  subjects: SubjectPerf[];
-}
+import React from 'react'
+import type { SubjectPerformanceGaugesProps } from '@/types/components'
 
 export const SubjectPerformanceGauges: React.FC<SubjectPerformanceGaugesProps> = ({ subjects }) => (
   <div className="bg-white rounded-lg border border-slate-200 p-6" style={{ borderWidth: '0.5px' }}>

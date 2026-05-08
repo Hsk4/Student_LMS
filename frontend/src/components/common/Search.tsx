@@ -1,21 +1,13 @@
-type SearchBarProps = {
-  value: string
-  onChange: (value: string) => void
-  onSubmit?: (value: string) => void
-
-  placeholder?: string
-  disabled?: boolean
-  className?: string
-}
+import type { SearchProps } from '@/types/components'
 
 export const SearchBar = ({
-  value,
+  value = '',
   onChange,
   onSubmit,
-  placeholder = "Search...",
+  placeholder = 'Search...',
   disabled = false,
-  className = ""
-}: SearchBarProps) => {
+  className = ''
+}: SearchProps) => {
   return (
     <input
       type="text"

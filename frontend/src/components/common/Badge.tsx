@@ -1,14 +1,7 @@
 import React from 'react'
+import type { BadgeProps } from '@/types/components'
 
-type BadgeType = "default " | "success" | "danger" | "warning" | "info"
-
-
-type BadgeProps = {
-    label : string,
-    type : BadgeType
-}
-
-const Badge: React.FC<BadgeProps> = ({ label, type = "default" }) => {
+const Badge: React.FC<BadgeProps> = ({ label, type = 'default' }) => {
     
 
     const styles : Record<string, string> = {

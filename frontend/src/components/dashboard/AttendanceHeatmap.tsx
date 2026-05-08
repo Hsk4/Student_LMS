@@ -1,9 +1,5 @@
-import React from "react";
-
-export interface AttendanceHeatmapProps {
-  weeks: Array<{ label: string; days: string[]; values: string[] }>;
-  // values = ["#639922", ...] for heat colors per cell.
-}
+import React from 'react'
+import type { AttendanceHeatmapProps } from '@/types/components'
 
 export const AttendanceHeatmap: React.FC<AttendanceHeatmapProps> = ({ weeks }) => (
   <div className="bg-white rounded-lg border border-slate-200 p-6" style={{ borderWidth: '0.5px' }}>

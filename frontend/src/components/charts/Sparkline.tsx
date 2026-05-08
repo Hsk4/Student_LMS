@@ -1,6 +1,5 @@
-interface MiniSparklineProps {
-  data: number[];
-}
+import type { MiniSparklineProps } from '@/types/components'
+
 export const MiniSparkline: React.FC<MiniSparklineProps> = ({ data }) => {
   if (!data.length) return null;
   const max = Math.max(...data), min = Math.min(...data);

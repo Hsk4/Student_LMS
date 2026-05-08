@@ -1,12 +1,7 @@
-import React from "react"
+import React from 'react'
+import type { ModalProps } from '@/types/components'
 
-type ModalProps = {
-    isOpen: boolean
-    onClose: () => void
-    children: React.ReactNode
-}
-
-const Modal : React.FC<ModalProps> = ({isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
  if(!isOpen) return null;
 

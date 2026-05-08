@@ -1,11 +1,5 @@
-export interface TeachersTableProps {
-    teachers: Array<{
-        name: string,
-        subject : string,
-        status: "Active" | "On Leave",
+import type { TeachersTableProps } from '@/types/components'
 
-    }>;
-}
 export const TeachersTable: React.FC<TeachersTableProps> = ({ teachers }) => (
   <div className="bg-white rounded-lg border border-slate-200 overflow-hidden" style={{ borderWidth: '0.5px' }}>
     {/* Header */}

@@ -1,18 +1,6 @@
-import React from "react";
-import { UserPlus, CheckCircle, CreditCard, AlertCircle, MessageSquare } from 'lucide-react';
-import type { ActivityFeedData } from "@/types/dashboard";
-
-export interface ActivityItem {
-  icon: React.ReactNode;
-  action: string;
-  time: string;
-  color: string;
-  bg: string;
-}
-
-export interface ActivityFeedProps {
-  feed: ActivityFeedData[];
-}
+import React from 'react'
+import { UserPlus, CheckCircle, CreditCard, AlertCircle, MessageSquare } from 'lucide-react'
+import type { ActivityFeedProps } from '@/types/components'
 
 /**
  * Get icon component based on activity type

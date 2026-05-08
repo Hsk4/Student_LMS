@@ -1,15 +1,7 @@
 import React from 'react'
+import type { ButtonProps } from '@/types/components'
 
-type ButtonProps = {
-    children: React.ReactNode
-    onClick: () => void
-    type?: 'button' | 'submit' | 'reset'
-    variant ? : 'primary' | 'secondary'
-    className?: string
-    disabled? : boolean
-}
-
-const Button : React.FC<ButtonProps> = ({
+const Button: React.FC<ButtonProps> = ({
 
     children,
     onClick,

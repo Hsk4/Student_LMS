@@ -1,15 +1,5 @@
-import React from "react";
-
-export interface LeaveRequest {
-  name: string;
-  type: string;
-  duration: string;
-  date: string;
-}
-
-export interface LeaveRequestsCardProps {
-  pending: LeaveRequest[];
-}
+import React from 'react'
+import type { LeaveRequestsCardProps } from '@/types/components'
 
 export const LeaveRequestsCard: React.FC<LeaveRequestsCardProps> = ({ pending }) => (
   <div className="bg-white rounded-lg border border-slate-200 overflow-hidden" style={{ borderWidth: '0.5px' }}>

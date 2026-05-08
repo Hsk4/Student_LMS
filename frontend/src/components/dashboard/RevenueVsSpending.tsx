@@ -1,10 +1,6 @@
-export interface RevenueVsSpendingChartProps {
-    revenue : number[];
-    spending : number[];
-    months : string[];
-}
+import type { RevenueVsSpendingChartProps } from '@/types/components'
 
-export const RevenueVsSpendingChart : React.FC<RevenueVsSpendingChartProps> = ({
+export const RevenueVsSpendingChart: React.FC<RevenueVsSpendingChartProps> = ({
 
     revenue,
     spending,

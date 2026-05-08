@@ -1,11 +1,5 @@
-import React from "react";
-
-export interface FeeDonutChartProps {
-  total: number;
-  paid: number;
-  pending: number;
-  overdue: number;
-}
+import React from 'react'
+import type { FeeDonutChartProps } from '@/types/components'
 
 export const FeeDonutChart: React.FC<FeeDonutChartProps> = ({
   total, paid, pending, overdue
