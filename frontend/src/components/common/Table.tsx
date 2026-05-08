@@ -1,5 +1,3 @@
-import React from "react";
-
 type Column<T> = {
   header: string;
   accessor: keyof T;

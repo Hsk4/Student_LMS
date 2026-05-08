@@ -1,4 +1,4 @@
-import React from "React"
+import React from "react"
 
 type ModalProps = {
     isOpen: boolean

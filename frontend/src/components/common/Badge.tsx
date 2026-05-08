@@ -4,7 +4,7 @@ type BadgeType = "default " | "success" | "danger" | "warning" | "info"
 
 
 type BadgeProps = {
-    lable : string,
+    label : string,
     type : BadgeType
 }
 
@@ -20,12 +20,10 @@ const Badge: React.FC<BadgeProps> = ({ label, type = "default" }) => {
 };
 
 
-    return ()=> (
+    return (
  <span className={`px-2 py-1 text-sm rounded ${styles[type]}`}>
       {label}
     </span>    
-    
-
     )
 }
 

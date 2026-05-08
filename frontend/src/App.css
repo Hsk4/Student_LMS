@@ -182,3 +182,83 @@
     border-right-color: var(--border);
   }
 }
+
+/* Custom component styles for Tailwind integration */
+.stat-card {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-top {
+  width: 100%;
+}
+
+.stat-val {
+  margin: 8px 0 4px 0;
+}
+
+.stat-lbl {
+  margin: 0;
+}
+
+.mini-spark {
+  width: 100%;
+}
+
+.badge-up {
+  color: #22c55e;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.badge-down {
+  color: #ef4444;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* Smooth scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Animation for fade in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+

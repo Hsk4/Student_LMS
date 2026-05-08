@@ -1,0 +1,1 @@
+export { ADMIN_NAV_ITEMS } from './adminNav.config.tsx'
