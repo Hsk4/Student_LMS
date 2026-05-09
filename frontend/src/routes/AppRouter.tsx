@@ -18,6 +18,16 @@ import Attendance from "@/pages/admin/Attendance"
 // ...import other admin pages as needed
 
 // Student pages
+import StudentDashboard from "@/pages/student/Dashboard"
+import StudentLogin from "@/pages/student/Login"
+import StudentSignup from "@/pages/student/Signup"
+import StudentLayout from "@/components/layout/StudentLayout"
+import StudentAssignments from "@/pages/student/Assignments"
+import StudentHelp from "@/pages/student/Help"
+import StudentContact from "@/pages/student/Contact"
+import StudentProgress from "@/pages/student/Progress"
+import StudentExams from "@/pages/student/Exams"
+import StudentNotes from "@/pages/student/Notes"
 // import StudentNotes from "@/pages/student/Notes"
 // import StudentDashboard from "@/pages/student/Dashboard"
 // import StudentLayout from "@/components/layout/StudentLayout"
@@ -28,8 +38,8 @@ import Attendance from "@/pages/admin/Attendance"
 export default function AppRouter() {
   return (
     <Routes>
-      {/* Root: redirect to admin login */}
-      <Route path="/" element={<Navigate to="/admin/login" replace />} />
+      {/* Root: redirect to student home for now */}
+      <Route path="/" element={<Navigate to="/student/dashboard" replace />} />
 
       {/* Public auth routes */}
       <Route path="/admin/login" element={<AdminLogin />} />
@@ -48,6 +58,18 @@ export default function AppRouter() {
       </Route>
 
       {/* Protected /student routes */}
+      <Route path="/student/login" element={<StudentLogin />} />
+      <Route path="/student/signup" element={<StudentSignup />} />
+
+      <Route path="/student/*" element={<StudentLayout />}>
+        <Route path="dashboard" element={<StudentDashboard />} />
+        <Route path="assignments" element={<StudentAssignments />} />
+        <Route path="notes" element={<StudentNotes />} />
+        <Route path="help" element={<StudentHelp />} />
+        <Route path="contact" element={<StudentContact />} />
+        <Route path="progress" element={<StudentProgress />} />
+        <Route path="exams" element={<StudentExams />} />
+      </Route>
       {/* <Route path="/student/*" element={<StudentLayout />}>
         <Route path="dashboard" element={<StudentDashboard />} />
         <Route path="notes" element={<StudentNotes />} />

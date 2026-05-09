@@ -8,6 +8,24 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
   const dateStr = today.toLocaleDateString('en-US', options);
   const week = Math.ceil((today.getDate() + new Date(today.getFullYear(), today.getMonth(), 1).getDay()) / 7);
 
+  // Get greeting based on time of day
+  const hour = today.getHours();
+  let greeting = 'Good morning';
+  let emoji = '👋';
+  if (hour >= 12 && hour < 18) {
+    greeting = 'Good afternoon';
+    emoji = '☀️';
+  } else if (hour >= 18) {
+    greeting = 'Good evening';
+    emoji = '🌙';
+  }
+
+  // Get role and name from localStorage
+  const role = localStorage.getItem('userRole') || 'Admin';
+  const userName = role === 'student' 
+    ? localStorage.getItem('studentName') || 'Student'
+    : 'Admin';
+
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200">
       <div className="px-6 py-4 flex items-center justify-between">
@@ -22,7 +40,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
           </Button>
           
           <div>
-            <h1 className="text-xl font-semibold text-slate-900">Good morning, Admin 👋</h1>
+            <h1 className="text-xl font-semibold text-slate-900">{greeting}, {userName} {emoji}</h1>
             <p className="text-xs text-slate-500 mt-0.5">{dateStr} · Term 2, Week {week}</p>
           </div>
         </div>
