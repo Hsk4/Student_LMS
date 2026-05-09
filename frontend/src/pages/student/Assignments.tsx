@@ -1,4 +1,3 @@
-import React from 'react'
 import { ClipboardList } from 'lucide-react'
 import SectionCard from '@/components/common/SectionCard'
 

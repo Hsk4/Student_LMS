@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { cn } from '@/utils/helpers';
 import { ADMIN_NAV_ITEMS } from '@/routes/adminNav.config'; 
 import type { NavGroup } from '@/types/nav';
+import UserMenu from '@/components/common/UserMenu'
 
 export default function Sidebar({ isMobileOpen }: { isMobileOpen: boolean }) {
   const navData: NavGroup[] = ADMIN_NAV_ITEMS; 
@@ -51,15 +52,11 @@ export default function Sidebar({ isMobileOpen }: { isMobileOpen: boolean }) {
       
       {/* Footer */}
       <div className="px-4 py-4 border-t border-slate-200">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-bold text-indigo-600">
-            AD
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-slate-900">Admin</p>
-            <p className="text-xs text-slate-500">Super Admin</p>
-          </div>
-        </div>
+        <UserMenu
+          name={localStorage.getItem('adminName') || 'Admin'}
+          roleLabel={'Admin'}
+          userId={localStorage.getItem('adminId') || undefined}
+        />
       </div>
     </aside>
   );

@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { cn } from '@/utils/helpers'
 import STUDENT_NAV_ITEMS from '@/routes/studentNav.config'
 import type { NavGroup } from '@/types/nav'
+import UserMenu from '@/components/common/UserMenu'
 
 export default function StudentSidebar({ isMobileOpen }: { isMobileOpen: boolean }) {
   const navData: NavGroup[] = STUDENT_NAV_ITEMS;
@@ -48,15 +49,11 @@ export default function StudentSidebar({ isMobileOpen }: { isMobileOpen: boolean
       </nav>
 
       <div className="px-4 py-4 border-t border-slate-200">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-bold text-indigo-600">
-            ST
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-slate-900">Student</p>
-            <p className="text-xs text-slate-500">Undergrad</p>
-          </div>
-        </div>
+        <UserMenu
+          name={localStorage.getItem('studentName') || 'Student'}
+          roleLabel={'Student'}
+          userId={localStorage.getItem('studentId') || undefined}
+        />
       </div>
     </aside>
   )

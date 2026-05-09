@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { BookOpen, Code, Eye, ChevronDown, ChevronUp, Copy, Check, FileText, Lightbulb, MessageSquare, ArrowRight } from 'lucide-react'
 import SectionCard from '@/components/common/SectionCard'
 

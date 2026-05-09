@@ -110,6 +110,8 @@ export interface AuthPageProps {
 
 export interface AuthFormValues {
   fullName?: string
+  username?: string
+  id?: string
   email: string
   password: string
   confirmPassword?: string
@@ -249,6 +251,16 @@ export interface SidebarProps {
 export interface TopbarProps {
   title?: string
   onMenuClick?: () => void
+}
+
+export interface UserMenuProps {
+  name?: string
+  roleLabel?: string
+  initials?: string
+  userId?: string
+  profileHref?: string
+  onProfile?: (userId?: string) => void
+  onLogout?: () => void
 }
 
 // ============================================================================

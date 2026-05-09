@@ -3,9 +3,9 @@ import { Routes, Route, Navigate } from "react-router-dom"
 // Layouts
 import DashboardLayout from "@/components/layout/DashboardLayout"
 
-// Auth pages
-import AdminLogin from "@/pages/admin/Login"
-import AdminSignup from "@/pages/admin/Signup"
+// Unified auth pages
+import Login from "@/pages/auth/Login"
+import Signup from "@/pages/auth/Signup"
 // import ForgotPassword from "@/pages/auth/ForgotPassword"
 
 // Admin pages
@@ -19,8 +19,6 @@ import Attendance from "@/pages/admin/Attendance"
 
 // Student pages
 import StudentDashboard from "@/pages/student/Dashboard"
-import StudentLogin from "@/pages/student/Login"
-import StudentSignup from "@/pages/student/Signup"
 import StudentLayout from "@/components/layout/StudentLayout"
 import StudentAssignments from "@/pages/student/Assignments"
 import StudentHelp from "@/pages/student/Help"
@@ -41,9 +39,9 @@ export default function AppRouter() {
       {/* Root: redirect to student home for now */}
       <Route path="/" element={<Navigate to="/student/dashboard" replace />} />
 
-      {/* Public auth routes */}
-      <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin/signup" element={<AdminSignup />} />
+      {/* Unified auth routes - role selected in form */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
       {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
 
       {/* Protected /admin routes */}
@@ -58,9 +56,6 @@ export default function AppRouter() {
       </Route>
 
       {/* Protected /student routes */}
-      <Route path="/student/login" element={<StudentLogin />} />
-      <Route path="/student/signup" element={<StudentSignup />} />
-
       <Route path="/student/*" element={<StudentLayout />}>
         <Route path="dashboard" element={<StudentDashboard />} />
         <Route path="assignments" element={<StudentAssignments />} />

@@ -4,12 +4,6 @@ import { Link } from 'react-router-dom'
 import Button from '@/components/common/Button'
 import type { AuthPageProps, AuthFormValues, AuthRole } from '@/types/components'
 
-const roleOptions: Array<{ value: AuthRole; label: string }> = [
-  { value: 'admin', label: 'Admin' },
-  { value: 'teacher', label: 'Teacher' },
-  { value: 'student', label: 'Student' },
-]
-
 const roleMeta: Record<AuthRole, { accent: string; icon: React.ReactElement; blurb: string }> = {
   admin: {
     accent: 'from-indigo-600 to-violet-600',
@@ -40,6 +34,8 @@ export default function AuthPage({
 }: AuthPageProps) {
   const [form, setForm] = useState<AuthFormValues>({
     fullName: '',
+    username: '',
+    id: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -124,6 +120,51 @@ export default function AuthPage({
                 </div>
               )}
 
+              {isSignup && (
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-slate-700">Username</label>
+                  <input
+                    name="username"
+                    value={form.username || ''}
+                    onChange={handleChange}
+                    type="text"
+                    required
+                    placeholder="Enter your username"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+                  />
+                </div>
+              )}
+
+              {isSignup && (
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-slate-700">ID</label>
+                  <input
+                    name="id"
+                    value={form.id || ''}
+                    onChange={handleChange}
+                    type="text"
+                    required
+                    placeholder="Enter your ID"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+                  />
+                </div>
+              )}
+
+              {!isSignup && (
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-slate-700">ID</label>
+                  <input
+                    name="id"
+                    value={form.id || ''}
+                    onChange={handleChange}
+                    type="text"
+                    required
+                    placeholder="Enter your ID"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+                  />
+                </div>
+              )}
+
               <div>
                 <label className="mb-2 block text-sm font-medium text-slate-700">Email</label>
                 <input
@@ -164,22 +205,6 @@ export default function AuthPage({
                   />
                 </div>
               )}
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-slate-700">Role category</label>
-                <select
-                  name="role"
-                  value={form.role}
-                  onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
-                >
-                  {roleOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
 
               <Button type="submit" className="w-full bg-slate-900 hover:bg-slate-800 focus:ring-slate-200">
                 {submitLabel}

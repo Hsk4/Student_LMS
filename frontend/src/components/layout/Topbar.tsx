@@ -1,4 +1,4 @@
-import { Menu, Search, Bell, Plus } from 'lucide-react'
+import { Menu, Bell } from 'lucide-react'
 import Button from '@/components/common/Button'
 import type { TopbarProps } from '@/types/components'
 
@@ -47,22 +47,6 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
 
         {/* Right section */}
         <div className="flex items-center gap-3">
-          {/* Search */}
-          <div className="hidden md:flex items-center px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg gap-2 w-64">
-            <Search size={16} className="text-slate-400" />
-            <input
-              type="text"
-              placeholder="Search..."
-              className="bg-transparent text-sm text-slate-700 placeholder-slate-400 outline-none flex-1"
-            />
-          </div>
-
-          {/* Quick Add Button */}
-          <Button variant="secondary" className="hidden sm:flex rounded-lg! px-3! py-1.5!">
-            <Plus size={16} />
-            Quick add
-          </Button>
-
           {/* Notifications */}
           <Button variant="secondary" className="relative p-1.5! rounded-lg!">
             <Bell size={20} className="text-slate-600" />
