@@ -4,15 +4,16 @@ import { Routes, Route, Navigate } from "react-router-dom"
 import DashboardLayout from "@/components/layout/DashboardLayout"
 
 // Auth pages
-// import Login from "@/pages/auth/Login"
+import AdminLogin from "@/pages/admin/Login"
+import AdminSignup from "@/pages/admin/Signup"
 // import ForgotPassword from "@/pages/auth/ForgotPassword"
 
 // Admin pages
 import Dashboard from "@/pages/admin/Dashboard"
 import AdminNotes from "@/pages/admin/Notes"
 import Teachers from "@/pages/admin/Teachers"
-// import Students from "@/pages/admin/Students"
-// import Attendance from "@/pages/admin/Attendance"
+import Students from "@/pages/admin/Students"
+import Attendance from "@/pages/admin/Attendance"
 // import Accounts from "@/pages/admin/Accounts"
 // ...import other admin pages as needed
 
@@ -27,21 +28,22 @@ import Teachers from "@/pages/admin/Teachers"
 export default function AppRouter() {
   return (
     <Routes>
-      {/* Root: redirect to admin dashboard */}
-      <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
+      {/* Root: redirect to admin login */}
+      <Route path="/" element={<Navigate to="/admin/login" replace />} />
 
       {/* Public auth routes */}
-      {/* <Route path="/login" element={<Login />} /> */}
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/signup" element={<AdminSignup />} />
       {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
 
       {/* Protected /admin routes */}
       <Route path="/admin/*" element={<DashboardLayout />}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="teachers" element={<Teachers />} />
-        <Route path="notes" element={<AdminNotes />} />
-        {/* <Route path="students" element={<Students />} />
+        <Route path="students" element={<Students />} />
         <Route path="attendance" element={<Attendance />} />
-        <Route path="accounts" element={<Accounts />} /> */}
+        <Route path="notes" element={<AdminNotes />} />
+        {/* <Route path="accounts" element={<Accounts />} /> */}
         {/* Add other admin child routes here */}
       </Route>
 

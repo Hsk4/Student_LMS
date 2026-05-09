@@ -11,9 +11,9 @@ import React from 'react'
 
 export interface ButtonProps {
   children: React.ReactNode
-  onClick: () => void
+  onClick?: () => void
   type?: 'button' | 'submit' | 'reset'
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'danger'
   className?: string
   disabled?: boolean
 }
@@ -33,6 +33,9 @@ export interface ModalProps {
   isOpen: boolean
   onClose: () => void
   children: React.ReactNode
+  className?: string
+  contentClassName?: string
+  hideCloseButton?: boolean
 }
 
 export interface PaginationProps {
@@ -62,6 +65,55 @@ export interface ToastProps {
   message: string
   type?: 'success' | 'error' | 'info'
   duration?: number
+}
+
+export interface SectionCardProps {
+  title: string
+  description?: string
+  badge?: string
+  children: React.ReactNode
+  className?: string
+  headerClassName?: string
+  bodyClassName?: string
+  action?: React.ReactNode
+}
+
+export interface DataTableColumn<T> {
+  header: string
+  className?: string
+  headerClassName?: string
+  render: (row: T) => React.ReactNode
+}
+
+export interface DataTableProps<T> {
+  columns: Array<DataTableColumn<T>>
+  data: T[]
+  rowKey: (row: T) => string | number
+  emptyMessage?: string
+  className?: string
+  tableClassName?: string
+}
+
+export type AuthMode = 'login' | 'signup'
+export type AuthRole = 'admin' | 'teacher' | 'student'
+
+export interface AuthPageProps {
+  mode: AuthMode
+  role: AuthRole
+  title: string
+  subtitle: string
+  submitLabel: string
+  switchLabel: string
+  switchHref: string
+  onSubmit: (payload: AuthFormValues) => void
+}
+
+export interface AuthFormValues {
+  fullName?: string
+  email: string
+  password: string
+  confirmPassword?: string
+  role: AuthRole
 }
 
 // ============================================================================
@@ -226,4 +278,57 @@ export interface AdminTeacher {
 
 export interface AdminTeachersSectionProps {
   teachers: AdminTeacher[]
+}
+
+// ============================================================================
+// Admin Students
+// ============================================================================
+
+export interface AdminStudent {
+  id: string
+  image: string
+  name: string
+  rollNumber: string
+  class: string
+  email: string
+  phone: string
+  guardianName: string
+  guardianPhone: string
+  status: 'Active' | 'Inactive' | 'Suspended'
+  gpa: number
+  joinDate: string
+}
+
+export interface AdminStudentsSectionProps {
+  students: AdminStudent[]
+}
+
+export interface AddStudentModalProps {
+  isOpen: boolean
+  onClose: () => void
+  onAdd: (student: Omit<AdminStudent, 'id'>) => void
+}
+
+// ============================================================================
+// Attendance
+// ============================================================================
+
+export interface AttendanceRecord {
+  id: string
+  studentName: string
+  rollNumber: string
+  class: string
+  date: string
+  status: 'Present' | 'Absent' | 'Late' | 'Excused'
+  markedBy: string
+}
+
+export interface AttendanceSectionProps {
+  attendance: AttendanceRecord[]
+}
+
+export interface MarkAttendanceModalProps {
+  isOpen: boolean
+  onClose: () => void
+  onMark: (record: Omit<AttendanceRecord, 'id'>) => void
 }

@@ -1,0 +1,5 @@
+export { default as TeachersSection } from './TeachersSection'
+export { default as StudentsSection } from './StudentsSection'
+export { default as AddStudentModal } from './AddStudentModal'
+export { default as AttendanceSection } from './AttendanceSection'
+export { default as MarkAttendanceModal } from './MarkAttendanceModal'

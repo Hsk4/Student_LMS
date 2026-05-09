@@ -1,4 +1,5 @@
 import { Menu, Search, Bell, Plus } from 'lucide-react'
+import Button from '@/components/common/Button'
 import type { TopbarProps } from '@/types/components'
 
 export default function Topbar({ onMenuClick }: TopbarProps) {
@@ -12,12 +13,13 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
       <div className="px-6 py-4 flex items-center justify-between">
         {/* Left section */}
         <div className="flex items-center gap-4 flex-1">
-          <button
+          <Button
             onClick={onMenuClick}
-            className="lg:hidden p-1.5 hover:bg-slate-100 rounded-lg transition-colors"
+            variant="secondary"
+            className="lg:hidden p-1.5! rounded-lg!"
           >
             <Menu size={20} className="text-slate-600" />
-          </button>
+          </Button>
           
           <div>
             <h1 className="text-xl font-semibold text-slate-900">Good morning, Admin 👋</h1>
@@ -38,16 +40,16 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
           </div>
 
           {/* Quick Add Button */}
-          <button className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200 hover:bg-slate-100 rounded-lg transition-colors text-sm text-slate-700 font-medium">
+          <Button variant="secondary" className="hidden sm:flex rounded-lg! px-3! py-1.5!">
             <Plus size={16} />
             Quick add
-          </button>
+          </Button>
 
           {/* Notifications */}
-          <button className="relative p-1.5 hover:bg-slate-100 rounded-lg transition-colors">
+          <Button variant="secondary" className="relative p-1.5! rounded-lg!">
             <Bell size={20} className="text-slate-600" />
             <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
-          </button>
+          </Button>
         </div>
       </div>
     </header>

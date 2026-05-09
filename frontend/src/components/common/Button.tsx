@@ -2,22 +2,22 @@ import React from 'react'
 import type { ButtonProps } from '@/types/components'
 
 const Button: React.FC<ButtonProps> = ({
-
-    children,
-    onClick,
-    type = 'button',
-    variant = "primary",
-    className = "",
-    disabled = false
+  children,
+  onClick,
+  type = 'button',
+  variant = 'primary',
+  className = '',
+  disabled = false,
 }) => {
+  const base =
+    'inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition focus:outline-none focus:ring-4 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60'
 
- const base = "px-4 py-2 rounded-md font-medium text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+  const variants: Record<NonNullable<ButtonProps['variant']>, string> = {
+    primary: 'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-200',
+    secondary: 'bg-slate-100 text-slate-700 hover:bg-slate-200 focus:ring-slate-200',
+    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-200',
+  }
 
- const variants :  Record <string, string> = {
-     primary: "bg-blue-600 text-white hover:bg-blue-700",
-    secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
-    danger: "bg-red-600 text-white hover:bg-red-700",
- }
   return (
     <button
       type={type}
