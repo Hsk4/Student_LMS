@@ -118,6 +118,54 @@ export interface AuthFormValues {
   role: AuthRole
 }
 
+// Notes
+export interface NoteItem {
+  id: string
+  title: string
+  content: string
+  category: string
+  updatedAt: string
+}
+
+export interface CategoryItem {
+  id: string
+  name: string
+  color: string
+}
+
+// Student dashboard
+export interface StudentCourse {
+  id: string
+  code: string
+  title: string
+  teacher: string
+  schedule: string
+  progress: number
+  assignmentCount: number
+}
+
+export interface StudentAssignment {
+  id: string
+  course: string
+  title: string
+  dueDate: string
+  status: 'Pending' | 'Submitted' | 'Overdue'
+}
+
+// Generic table types
+export interface Column<T> {
+  header: string
+  accessor: keyof T
+}
+
+export interface GenericTableProps<T> {
+  columns: Column<T>[]
+  data: T[]
+}
+
+// Help tabs
+export type HelpTab = 'essentials' | 'templates' | 'markdown'
+
 // ============================================================================
 // Dashboard Components
 // ============================================================================
@@ -281,6 +329,12 @@ export interface AdminTeacher {
   name: string
   degree: string
   subject: string
+  batch: string
+  semester: string
+  attendance: number
+  joinedDate: string
+  salary: number
+  totalStudents: number
   status: 'Active' | 'On Leave' | 'Inactive'
   email: string
   phone: string
@@ -300,15 +354,22 @@ export interface AdminStudent {
   id: string
   image: string
   name: string
+  studentId: string
   rollNumber: string
-  class: string
   email: string
   phone: string
+  password: string
+  homeroomTeacher: string
+  signOnTime: string
+  signOffTime: string
+  semesterFees: number
+  previousSchool: string
   guardianName: string
   guardianPhone: string
   status: 'Active' | 'Inactive' | 'Suspended'
   gpa: number
   joinDate: string
+  class: string
 }
 
 export interface AdminStudentsSectionProps {

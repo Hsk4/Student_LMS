@@ -1,10 +1,19 @@
-import React from 'react'
-import { GraduationCap, Mail, Phone } from 'lucide-react'
+import React, { useState } from 'react'
+import { GraduationCap, MoreVertical } from 'lucide-react'
 import SectionCard from '@/components/common/SectionCard'
 import DataTable from '@/components/common/DataTable'
+import { themeClasses } from '@/styles/theme'
 import type { AdminStudentsSectionProps, DataTableColumn } from '@/types/components'
 
 const StudentsSection: React.FC<AdminStudentsSectionProps> = ({ students }) => {
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null)
+
+  const handleAction = (studentId: string, action: string) => {
+    console.log(`Action: ${action} for student: ${studentId}`)
+    setOpenMenuId(null)
+    // Add your action handlers here (Edit, Delete, View Details, etc.)
+  }
+
   const columns: DataTableColumn<AdminStudentsSectionProps['students'][number]>[] = [
     {
       header: 'Student',
@@ -18,7 +27,7 @@ const StudentsSection: React.FC<AdminStudentsSectionProps> = ({ students }) => {
           />
           <div>
             <p className="font-medium text-slate-900">{student.name}</p>
-            <p className="text-xs text-slate-500">{student.email}</p>
+            <p className="text-xs text-slate-500">{student.studentId}</p>
           </div>
         </div>
       ),
@@ -29,48 +38,101 @@ const StudentsSection: React.FC<AdminStudentsSectionProps> = ({ students }) => {
       render: (student) => <span className="font-mono text-slate-700">{student.rollNumber}</span>,
     },
     {
-      header: 'Class',
-      render: (student) => <span className="text-slate-600">{student.class}</span>,
+      header: 'Email',
+      className: 'min-w-[180px]',
+      render: (student) => <span className="text-slate-600 text-sm">{student.email}</span>,
+    },
+    {
+      header: 'Phone',
+      className: 'whitespace-nowrap',
+      render: (student) => <span className="text-slate-600">{student.phone}</span>,
+    },
+    {
+      header: 'Homeroom Teacher',
+      className: 'min-w-[150px]',
+      render: (student) => <span className="text-slate-600">{student.homeroomTeacher}</span>,
+    },
+    {
+      header: 'Sign On/Off',
+      className: 'whitespace-nowrap',
+      render: (student) => (
+        <span className="text-xs text-slate-600">
+          {student.signOnTime} - {student.signOffTime}
+        </span>
+      ),
+    },
+    {
+      header: 'Semester Fees',
+      className: 'whitespace-nowrap',
+      render: (student) => (
+        <span className={`${themeClasses.badgeWarning} inline-flex items-center gap-1`}>
+          ₹{student.semesterFees.toLocaleString()}
+        </span>
+      ),
+    },
+    {
+      header: 'Previous School',
+      className: 'min-w-[180px]',
+      render: (student) => <span className="text-slate-600 text-sm">{student.previousSchool}</span>,
     },
     {
       header: 'GPA',
+      className: 'whitespace-nowrap',
       render: (student) => (
-        <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 font-semibold text-amber-700">
+        <span className={`${themeClasses.badgeSuccess} inline-flex items-center gap-1`}>
           <GraduationCap size={14} />
           {student.gpa.toFixed(2)}
         </span>
       ),
     },
     {
-      header: 'Guardian',
-      render: (student) => <span className="text-slate-600">{student.guardianName}</span>,
-    },
-    {
       header: 'Status',
+      className: 'whitespace-nowrap',
       render: (student) => (
-        <span
-          className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${
-            student.status === 'Active'
-              ? 'bg-green-100 text-green-700'
-              : student.status === 'Suspended'
-                ? 'bg-red-100 text-red-700'
-                : 'bg-slate-200 text-slate-700'
-          }`}
-        >
+        <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${student.status === 'Active' ? themeClasses.badgeSuccess : student.status === 'Suspended' ? themeClasses.badgeDanger : themeClasses.badgeInfo}`}>
           {student.status}
         </span>
       ),
     },
     {
-      header: 'Contact',
+      header: 'Actions',
+      className: 'relative',
       render: (student) => (
-        <div className="flex gap-2">
-          <a href={`mailto:${student.email}`} className="text-slate-500 transition-colors hover:text-indigo-600">
-            <Mail size={16} />
-          </a>
-          <a href={`tel:${student.phone}`} className="text-slate-500 transition-colors hover:text-indigo-600">
-            <Phone size={16} />
-          </a>
+        <div className="relative">
+          <button
+            onClick={() => setOpenMenuId(openMenuId === student.id ? null : student.id)}
+            className="p-2 hover:bg-slate-100 rounded-md transition-colors"
+          >
+            <MoreVertical size={18} style={{ color: '#64748b' }} />
+          </button>
+          {openMenuId === student.id && (
+            <div className="absolute right-0 mt-2 w-40 bg-white border border-slate-200 rounded-lg shadow-lg z-10">
+              <button
+                onClick={() => handleAction(student.id, 'view')}
+                className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
+                View Details
+              </button>
+              <button
+                onClick={() => handleAction(student.id, 'edit')}
+                className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleAction(student.id, 'deactivate')}
+                className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
+                Deactivate
+              </button>
+              <button
+                onClick={() => handleAction(student.id, 'delete')}
+                className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 border-t border-slate-200"
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
       ),
     },
@@ -83,7 +145,7 @@ const StudentsSection: React.FC<AdminStudentsSectionProps> = ({ students }) => {
         data={students}
         rowKey={(student) => student.id}
         emptyMessage="No students found"
-        tableClassName="min-w-[980px]"
+        tableClassName="min-w-[1400px]"
       />
     </SectionCard>
   )

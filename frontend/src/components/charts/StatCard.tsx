@@ -1,5 +1,6 @@
 import React from 'react'
 import type { StatCardProps, MiniSparklineProps } from '@/types/components'
+import { themeClasses } from '@/styles/theme'
 
 export const StatCard: React.FC<StatCardProps> = ({
   icon,
@@ -21,7 +22,7 @@ export const StatCard: React.FC<StatCardProps> = ({
   const bgColorHex = colorMap[iconBgColor] || "#e0e7ff"; // fallback to indigo-100
 
   return (
-    <div className="bg-white rounded-lg border border-slate-200 p-6 hover:shadow-md hover:border-slate-200 transition-all" style={{ borderWidth: '0.5px' }}>
+    <div className={`${themeClasses.card} ${themeClasses.cardPadding}`}>
       <div className="flex items-start justify-between mb-4">
         <div className="w-12 h-12 rounded-lg flex items-center justify-center text-lg text-slate-700" style={{ backgroundColor: bgColorHex }}>
           {icon}

@@ -14,7 +14,7 @@ import AdminNotes from "@/pages/admin/Notes"
 import Teachers from "@/pages/admin/Teachers"
 import Students from "@/pages/admin/Students"
 import Attendance from "@/pages/admin/Attendance"
-// import Accounts from "@/pages/admin/Accounts"
+import Accounts from "@/pages/admin/Accounts"
 // ...import other admin pages as needed
 
 // Student pages
@@ -51,7 +51,7 @@ export default function AppRouter() {
         <Route path="students" element={<Students />} />
         <Route path="attendance" element={<Attendance />} />
         <Route path="notes" element={<AdminNotes />} />
-        {/* <Route path="accounts" element={<Accounts />} /> */}
+        <Route path="accounts" element={<Accounts />} />
         {/* Add other admin child routes here */}
       </Route>
 
@@ -71,7 +71,7 @@ export default function AppRouter() {
       </Route> */}
 
       {/* 404 Fallback */}
-      <Route path="*" element={<div className="p-12 text-center">404 | Page Not Found</div>} />
+      <Route path="*" element={<div style={{ padding: 48, textAlign: 'center' }}>404 | Page Not Found</div>} />
     </Routes>
   )
 }

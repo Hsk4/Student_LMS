@@ -1,4 +1,5 @@
 import React from 'react'
+import { themeClasses } from '@/styles/theme'
 import type { FeeDonutChartProps } from '@/types/components'
 
 export const FeeDonutChart: React.FC<FeeDonutChartProps> = ({
@@ -10,8 +11,8 @@ export const FeeDonutChart: React.FC<FeeDonutChartProps> = ({
   const overdueArc = (overdue/total)*CIRC;
 
   return (
-    <div className="bg-white rounded-lg border border-slate-200 p-6" style={{ borderWidth: '0.5px' }}>
-      <h3 className="text-base font-semibold text-slate-900 mb-6">Fee Collection</h3>
+    <div className={`${themeClasses.dashboardCardShell} p-6`}>
+      <h3 className={`${themeClasses.heading5} mb-6`}>Fee Collection</h3>
       
       <div className="flex flex-col items-center gap-6">
         <svg viewBox="0 0 90 90" width={120} height={120}>
@@ -33,21 +34,21 @@ export const FeeDonutChart: React.FC<FeeDonutChartProps> = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <span className="shrink-0 w-3 h-3 rounded-full" style={{background:"#6366f1"}}/>
-              <span className="text-sm text-slate-600">Paid</span>
+              <span className={themeClasses.textSm}>Paid</span>
             </div>
             <span className="font-semibold text-slate-900">{paid}</span>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <span className="shrink-0 w-3 h-3 rounded-full" style={{background:"#f59e0b"}}/>
-              <span className="text-sm text-slate-600">Pending</span>
+              <span className={themeClasses.textSm}>Pending</span>
             </div>
             <span className="font-semibold text-slate-900">{pending}</span>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <span className="shrink-0 w-3 h-3 rounded-full" style={{background:"#ef4444"}}/>
-              <span className="text-sm text-slate-600">Overdue</span>
+              <span className={themeClasses.textSm}>Overdue</span>
             </div>
             <span className="font-semibold text-slate-900">{overdue}</span>
           </div>

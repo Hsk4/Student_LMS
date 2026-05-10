@@ -116,91 +116,65 @@ export const Notes: React.FC<NotesProps> = ({ role = 'student' }) => {
     .filter((n) => n.title.toLowerCase().includes(query.toLowerCase()) || n.content.toLowerCase().includes(query.toLowerCase()))
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-6 flex items-center gap-3">
-          <FileText size={28} className="text-indigo-600" />
+    <div className="notes-page">
+      <div className="notes-container">
+        <div className="notes-header">
+          <FileText size={28} style={{ color: '#4f46e5' }} />
           <div>
-            <h1 className="text-2xl font-semibold text-slate-900">{role === 'admin' ? 'Admin Notes' : 'My Notes'}</h1>
-            <p className="text-sm text-slate-500">Organize notes by subject and create study materials.</p>
+            <h1 className="theme-h3">{role === 'admin' ? 'Admin Notes' : 'My Notes'}</h1>
+            <p className="theme-text-sm">Organize notes by subject and create study materials.</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="notes-grid">
           {/* Left: categories and notes list */}
-          <aside className="lg:col-span-1">
+          <aside className="notes-aside">
             {/* Categories Section */}
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-3">
-                <h2 className="text-sm font-semibold text-slate-900">Subjects</h2>
-                <button
-                  onClick={() => setShowAddCategory(!showAddCategory)}
-                  className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors"
-                >
-                  <FolderPlus size={16} className="text-slate-600" />
+            <div className="notes-categories">
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                <h2 className="theme-text-sm" style={{ fontWeight: 700 }}>Subjects</h2>
+                <button onClick={() => setShowAddCategory(!showAddCategory)} className="theme-btn-sm" style={{ padding: 6 }}>
+                  <FolderPlus size={16} style={{ color: '#475569' }} />
                 </button>
               </div>
 
               {showAddCategory && (
-                <div className="mb-3 flex gap-2">
+                <div style={{ marginBottom: 12, display: 'flex', gap: 8 }}>
                   <input
                     value={newCategoryName}
                     onChange={(e) => setNewCategoryName(e.target.value)}
                     placeholder="Subject name"
-                    className="flex-1 rounded-lg bg-white border border-slate-200 px-2 py-2 text-xs focus:outline-none"
+                    className="theme-input"
                     onKeyPress={(e) => e.key === 'Enter' && handleAddCategory()}
                   />
-                  <button
-                    onClick={handleAddCategory}
-                    className="px-2 py-2 bg-indigo-600 text-white rounded-lg text-xs font-medium hover:bg-indigo-700"
-                  >
+                  <button onClick={handleAddCategory} className="theme-btn" style={{ padding: '8px 12px', backgroundColor: '#4f46e5', color: 'white' }}>
                     Add
                   </button>
                 </div>
               )}
 
-              <div className="space-y-2">
-                <button
-                  onClick={() => setSelectedCategory('All')}
-                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors flex items-center justify-between ${
-                    selectedCategory === 'All'
-                      ? 'bg-indigo-100 text-indigo-900 font-medium'
-                      : 'hover:bg-slate-100 text-slate-700'
-                  }`}
-                >
-                  <span className="flex items-center gap-2">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <button onClick={() => setSelectedCategory('All')} className={`notes-category-btn ${selectedCategory === 'All' ? 'selected' : ''}`}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <Folder size={14} />
                     All Notes
                   </span>
-                  <span className="text-xs bg-slate-200 px-2 py-0.5 rounded">{notesList.length}</span>
+                  <span className="theme-badge">{notesList.length}</span>
                 </button>
 
                 {categories.map((cat) => {
                   const catCount = notesList.filter((n) => n.category === cat.name).length
-                  const bgColor = `bg-${cat.color}-100`
-                  const textColor = `text-${cat.color}-900`
-                  const hoverColor = `hover:bg-${cat.color}-50`
                   return (
-                    <div key={cat.id} className="flex items-center gap-2 group">
-                      <button
-                        onClick={() => setSelectedCategory(cat.name)}
-                        className={`flex-1 text-left px-3 py-2 rounded-lg text-sm transition-colors flex items-center justify-between ${
-                          selectedCategory === cat.name
-                            ? `${bgColor} ${textColor} font-medium`
-                            : `${hoverColor} text-slate-700`
-                        }`}
-                      >
-                        <span className="flex items-center gap-2">
+                    <div key={cat.id} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <button onClick={() => setSelectedCategory(cat.name)} className={`notes-category-btn ${selectedCategory === cat.name ? 'selected' : ''}`}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                           <Folder size={14} />
                           {cat.name}
                         </span>
-                        <span className="text-xs bg-slate-200 px-2 py-0.5 rounded">{catCount}</span>
+                        <span className="theme-badge">{catCount}</span>
                       </button>
-                      <button
-                        onClick={() => handleDeleteCategory(cat.id)}
-                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-100 rounded"
-                      >
-                        <X size={14} className="text-red-600" />
+                      <button onClick={() => handleDeleteCategory(cat.id)} className="theme-btn-sm" style={{ padding: 6, opacity: 0.8 }}>
+                        <X size={14} style={{ color: '#dc2626' }} />
                       </button>
                     </div>
                   )
@@ -209,71 +183,46 @@ export const Notes: React.FC<NotesProps> = ({ role = 'student' }) => {
             </div>
 
             {/* Search and Create */}
-            <div className="flex gap-2 mb-4">
-              <div className="flex-1 relative">
-                <input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search notes"
-                  className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-sm focus:outline-none"
-                />
-                <Search className="absolute right-3 top-2.5 text-slate-400" size={16} />
+            <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+              <div style={{ flex: 1, position: 'relative' }}>
+                <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search notes" className="theme-input" />
+                <Search size={16} style={{ position: 'absolute', right: 12, top: 10, color: '#94a3b8' }} />
               </div>
-              <Button onClick={handleCreate} className="px-3">
+              <Button onClick={handleCreate} className="theme-btn-sm">
                 <Plus size={16} />
               </Button>
             </div>
 
             {/* Notes list */}
-            <div className="space-y-3">
-              {filtered.length === 0 && <div className="text-sm text-slate-500">No notes in this subject</div>}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {filtered.length === 0 && <div className="theme-text-sm">No notes in this subject</div>}
               {filtered.map((note) => (
-                <article
-                  key={note.id}
-                  onClick={() => setSelectedId(note.id)}
-                  className={`cursor-pointer rounded-lg p-3 bg-white border transition-shadow ${
-                    note.id === selectedId ? 'ring-2 ring-indigo-100 shadow-sm' : 'hover:shadow'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <h3 className="text-sm font-semibold text-slate-900 truncate">{note.title}</h3>
-                    <span className="text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">{note.category}</span>
+                <article key={note.id} onClick={() => setSelectedId(note.id)} className={`notes-note-article ${note.id === selectedId ? 'selected' : ''}`}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+                    <h3 className="theme-text-sm" style={{ fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{note.title}</h3>
+                    <span className="theme-badge" style={{ backgroundColor: '#eef2ff', color: '#4f46e5' }}>{note.category}</span>
                   </div>
-                  <p className="text-xs text-slate-400">{new Date(note.updatedAt).toLocaleDateString()}</p>
-                  <p className="mt-2 text-xs text-slate-500 line-clamp-2" dangerouslySetInnerHTML={{ __html: previewText(note.content) }} />
+                  <p className="theme-text-sm" style={{ color: '#94a3b8' }}>{new Date(note.updatedAt).toLocaleDateString()}</p>
+                  <p style={{ marginTop: 8, fontSize: 13, color: '#475569' }} dangerouslySetInnerHTML={{ __html: previewText(note.content) }} />
                 </article>
               ))}
             </div>
           </aside>
 
           {/* Right: editor / preview */}
-          <div className="lg:col-span-3">
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-              <div className="px-6 py-4 flex items-center gap-4 border-b border-slate-100">
-                <div className="flex-1">
-                  <input
-                    value={selected?.title || ''}
-                    onChange={(e) =>
-                      setNotesList((s) => s.map((n) => (n.id === selected?.id ? { ...n, title: e.target.value } : n)))
-                    }
-                    className="w-full text-lg font-semibold bg-transparent focus:outline-none"
-                  />
-                  <div className="flex items-center gap-2 mt-2">
-                    <p className="text-xs text-slate-400">Last updated: {selected ? new Date(selected.updatedAt).toLocaleString() : '-'}</p>
+          <div>
+            <div className="notes-editor">
+              <div className="notes-editor-header">
+                <div style={{ flex: 1 }}>
+                  <input value={selected?.title || ''} onChange={(e) => setNotesList((s) => s.map((n) => (n.id === selected?.id ? { ...n, title: e.target.value } : n)))} className="" style={{ width: '100%', fontSize: 18, fontWeight: 700, background: 'transparent', border: 'none', outline: 'none' }} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
+                    <p className="theme-text-sm">Last updated: {selected ? new Date(selected.updatedAt).toLocaleString() : '-'}</p>
                     {selected && (
                       <>
-                        <span className="text-xs text-slate-300">•</span>
-                        <select
-                          value={selected?.category || 'Mathematics'}
-                          onChange={(e) =>
-                            setNotesList((s) => s.map((n) => (n.id === selected?.id ? { ...n, category: e.target.value } : n)))
-                          }
-                          className="text-xs bg-slate-50 border border-slate-200 rounded px-2 py-1 focus:outline-none"
-                        >
+                        <span className="theme-text-sm">•</span>
+                        <select value={selected?.category || 'Mathematics'} onChange={(e) => setNotesList((s) => s.map((n) => (n.id === selected?.id ? { ...n, category: e.target.value } : n)))} className="theme-select">
                           {categories.map((cat) => (
-                            <option key={cat.id} value={cat.name}>
-                              {cat.name}
-                            </option>
+                            <option key={cat.id} value={cat.name}>{cat.name}</option>
                           ))}
                         </select>
                       </>
@@ -281,51 +230,26 @@ export const Notes: React.FC<NotesProps> = ({ role = 'student' }) => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setIsPreview(false)}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
-                      !isPreview ? 'bg-indigo-600 text-white' : 'bg-white text-slate-700 border border-slate-200'
-                    }`}
-                  >
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button onClick={() => setIsPreview(false)} className={`theme-btn-sm`} style={{ backgroundColor: !isPreview ? '#4f46e5' : '#fff', color: !isPreview ? '#fff' : '#0f172a' }}>
                     <Edit size={14} /> Edit
                   </button>
-
-                  <button
-                    onClick={() => setIsPreview(true)}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
-                      isPreview ? 'bg-indigo-600 text-white' : 'bg-white text-slate-700 border border-slate-200'
-                    }`}
-                  >
+                  <button onClick={() => setIsPreview(true)} className={`theme-btn-sm`} style={{ backgroundColor: isPreview ? '#4f46e5' : '#fff', color: isPreview ? '#fff' : '#0f172a' }}>
                     <Eye size={14} /> Preview
                   </button>
-
-                  <button onClick={handleSave} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm">
+                  <button onClick={handleSave} className="theme-btn" style={{ backgroundColor: '#059669', color: '#fff' }}>
                     <Save size={14} /> Save
                   </button>
-
-                  <button onClick={() => selected && handleExport(selected)} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 text-slate-700 text-sm">
-                    ⬇️ Export
-                  </button>
-
-                  <button onClick={() => selected && handleDelete(selected.id)} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-50 text-red-600 text-sm">
-                    <Trash2 size={14} /> Delete
-                  </button>
+                  <button onClick={() => selected && handleExport(selected)} className="theme-btn" style={{ backgroundColor: '#f1f5f9', color: '#0f172a' }}>⬇️ Export</button>
+                  <button onClick={() => selected && handleDelete(selected.id)} className="theme-btn" style={{ backgroundColor: '#fff1f2', color: '#dc2626' }}><Trash2 size={14} /> Delete</button>
                 </div>
               </div>
 
-              <div className="p-6">
+              <div className="notes-editor-body">
                 {!isPreview ? (
-                  <textarea
-                    value={selected?.content || ''}
-                    onChange={(e) =>
-                      setNotesList((s) => s.map((n) => (n.id === selected?.id ? { ...n, content: e.target.value } : n)))
-                    }
-                    placeholder="Write your note here using Markdown..."
-                    className="w-full min-h-105 p-4 text-sm resize-none bg-transparent focus:outline-none border border-slate-100 rounded-lg"
-                  />
+                  <textarea value={selected?.content || ''} onChange={(e) => setNotesList((s) => s.map((n) => (n.id === selected?.id ? { ...n, content: e.target.value } : n)))} placeholder="Write your note here using Markdown..." className="theme-textarea" style={{ minHeight: 260 }} />
                 ) : (
-                  <div className="prose max-w-none">
+                  <div className="theme-text-base">
                     <MarkdownPreview content={selected?.content || ''} />
                   </div>
                 )}
@@ -356,8 +280,8 @@ const MarkdownPreview: React.FC<{ content: string }> = ({ content }) => {
         out.push(<p key={`br-${i}`} />)
         continue
       }
-      if (line.startsWith('# ')) out.push(<h1 key={i} className="text-2xl font-bold mt-4 mb-2">{line.slice(2)}</h1>)
-      else if (line.startsWith('## ')) out.push(<h2 key={i} className="text-xl font-semibold mt-4 mb-2">{line.slice(3)}</h2>)
+        if (line.startsWith('# ')) out.push(<h1 key={i} className="theme-h2" style={{ marginTop: 16, marginBottom: 8 }}>{line.slice(2)}</h1>)
+        else if (line.startsWith('## ')) out.push(<h2 key={i} className="theme-h3" style={{ marginTop: 14, marginBottom: 8 }}>{line.slice(3)}</h2>)
       else if (line.startsWith('- ')) {
         // collect a list
         const items = [line.slice(2)]

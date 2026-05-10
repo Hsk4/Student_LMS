@@ -1,11 +1,12 @@
 import React from 'react'
+import { themeClasses } from '@/styles/theme'
 import type { LeaveRequestsCardProps } from '@/types/components'
 
 export const LeaveRequestsCard: React.FC<LeaveRequestsCardProps> = ({ pending }) => (
-  <div className="bg-white rounded-lg border border-slate-200 overflow-hidden" style={{ borderWidth: '0.5px' }}>
-    <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between" style={{ borderBottomWidth: '0.5px' }}>
-      <h3 className="text-base font-semibold text-slate-900">Leave Requests</h3>
-      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">
+  <div className={themeClasses.dashboardCardShell}>
+    <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+      <h3 className={themeClasses.heading5}>Leave Requests</h3>
+      <span className={themeClasses.badgeWarning}>
         {pending.length} pending
       </span>
     </div>

@@ -1,16 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { User, LogOut, Settings } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-
-type UserMenuProps = {
-  name?: string
-  roleLabel?: string
-  initials?: string
-  userId?: string
-  profileHref?: string
-  onProfile?: (userId?: string) => void
-  onLogout?: () => void
-}
+import type { UserMenuProps } from '@/types/components'
 
 export default function UserMenu({ name, roleLabel, initials, userId, profileHref, onProfile, onLogout }: UserMenuProps) {
   const [open, setOpen] = useState(false)
@@ -63,31 +54,31 @@ export default function UserMenu({ name, roleLabel, initials, userId, profileHre
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((s) => !s)}
-        className="w-full flex items-center gap-3 rounded-md px-1 py-1 hover:bg-slate-50"
+        className="theme-user-menu-trigger text-left"
         aria-haspopup="true"
         aria-expanded={open}
       >
-        <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-bold text-indigo-600">{displayInitials || 'U'}</div>
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-slate-900 truncate">{name || 'User'}</p>
-          <p className="text-xs text-slate-500 truncate">{roleLabel || ''}</p>
+        <div className="theme-badge theme-badge-info" style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 'bold', color: 'white', border: '1px solid rgba(255,255,255,0.15)' }}>{displayInitials || 'U'}</div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <p className="theme-text-sm font-bold text-white truncate">{name || 'User'}</p>
+          <p className="theme-text-xs text-slate-200 truncate">{roleLabel || ''}</p>
         </div>
       </button>
 
       {open && (
         <div className="absolute bottom-12 left-0 w-52 rounded-xl bg-white border border-slate-200 shadow-lg py-2 z-50">
-          <button onClick={handleProfile} className="w-full text-left px-4 py-2 hover:bg-slate-50 flex items-center gap-3">
+          <button onClick={handleProfile} className="w-full text-left theme-btn-sm theme-btn flex items-center gap-3">
             <User size={16} />
-            <span className="text-sm">View profile</span>
+            <span className="theme-text-sm">View profile</span>
           </button>
-          <button onClick={() => navigate('/settings')} className="w-full text-left px-4 py-2 hover:bg-slate-50 flex items-center gap-3">
+          <button onClick={() => navigate('/settings')} className="w-full text-left theme-btn-sm theme-btn flex items-center gap-3">
             <Settings size={16} />
-            <span className="text-sm">Settings</span>
+            <span className="theme-text-sm">Settings</span>
           </button>
           <div className="border-t border-slate-100 my-1" />
-          <button onClick={handleLogout} className="w-full text-left px-4 py-2 hover:bg-slate-50 flex items-center gap-3 text-red-600">
+          <button onClick={handleLogout} className="w-full text-left theme-btn-sm theme-btn flex items-center gap-3 theme-badge-danger">
             <LogOut size={16} />
-            <span className="text-sm">Logout</span>
+            <span className="theme-text-sm">Logout</span>
           </button>
         </div>
       )}

@@ -1,0 +1,476 @@
+/* Universal Theme Utilities */
+
+/* Card Component */
+.theme-card {
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 300ms ease;
+}
+
+.theme-card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Button Component - Universal */
+.theme-btn {
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  transition: all 300ms ease;
+  cursor: pointer;
+  border: none;
+}
+
+.theme-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.theme-btn-sm {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.theme-btn-lg {
+  padding: 16px 24px;
+  font-size: 18px;
+}
+
+/* Sidebar */
+.theme-sidebar {
+  width: 16rem;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  transition: background-color 200ms ease;
+}
+
+.theme-sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  transition: all 200ms ease;
+  cursor: pointer;
+}
+
+.theme-sidebar-link-active {
+  font-weight: 600;
+}
+
+.theme-sidebar-title {
+  margin-bottom: 12px;
+  padding: 0 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.theme-sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.theme-sidebar-footer-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+}
+
+.theme-sidebar-footer-role {
+  font-size: 12px;
+  color: #cbd5e1;
+}
+
+.theme-user-menu-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  transition: background-color 200ms ease, transform 200ms ease;
+}
+
+.theme-user-menu-trigger:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Typography */
+.theme-h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.theme-h2 {
+  font-size: 30px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.theme-h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.theme-h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.theme-h5 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.theme-text-base {
+  font-size: 16px;
+  color: #334155;
+}
+
+.theme-text-sm {
+  font-size: 14px;
+  color: #475569;
+}
+
+.theme-text-xs {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* Table */
+.theme-table-container {
+  overflow-x: auto;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.theme-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.theme-table thead {
+  background-color: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.theme-table th {
+  padding: 12px 24px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.theme-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 200ms ease;
+}
+
+.theme-table tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+.theme-table td {
+  padding: 16px 24px;
+  font-size: 14px;
+}
+
+/* Badge/Status */
+.theme-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.theme-badge-success {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.theme-badge-warning {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.theme-badge-danger {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.theme-badge-info {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+/* Modal */
+.theme-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.theme-modal {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+  max-width: 448px;
+  width: 100%;
+  margin: 16px;
+}
+
+.theme-modal-header {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 24px;
+}
+
+.theme-modal-body {
+  padding: 24px;
+}
+
+.theme-modal-footer {
+  border-top: 1px solid #e2e8f0;
+  padding: 24px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+/* Form Elements */
+.theme-input,
+.theme-select,
+.theme-textarea {
+  width: 100%;
+  padding: 8px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  outline: none;
+  transition: all 200ms ease;
+}
+
+.theme-input:focus,
+.theme-select:focus,
+.theme-textarea:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px #e0e7ff;
+}
+
+.theme-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 8px;
+}
+
+.theme-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Role-based Active States */
+.theme-active-admin {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.theme-active-teacher {
+  background-color: #10b981;
+  color: white;
+}
+
+.theme-active-student {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.theme-dashboard-heading {
+  font-size: 30px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.theme-dashboard-subheading {
+  color: #64748b;
+}
+
+/* Templates in Help page */
+.template-toggle {
+  width: 100%;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8fafc;
+  border: none;
+}
+
+.template-item { overflow: hidden; }
+
+.template-code {
+  background-color: #0f172a;
+  color: #f8fafc;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  overflow-x: auto;
+}
+
+.template-preview { padding: 12px; background-color: white; }
+
+/* Notes page specific layout helpers */
+.notes-page {
+  min-height: 100vh;
+  padding: 16px;
+  background-color: #f8fafc;
+}
+
+@media (min-width: 768px) {
+  .notes-page { padding: 32px; }
+}
+
+.notes-container { max-width: 1120px; margin: 0 auto; }
+
+.notes-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+
+.notes-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 1024px) {
+  .notes-grid { grid-template-columns: 1fr 3fr; }
+}
+
+.notes-category-btn:focus { outline: none; }
+
+.notes-categories { margin-bottom: 16px; }
+
+.notes-category-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.notes-category-btn.selected { background-color: #eef2ff; color: #4f46e5; font-weight: 600; }
+
+.notes-note-article {
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  transition: box-shadow .15s, outline .15s;
+}
+.notes-note-article:hover { box-shadow: 0 6px 12px rgba(15,23,42,0.04); }
+.notes-note-article.selected { box-shadow: 0 10px 20px rgba(15,23,42,0.06); outline: 3px solid #eef2ff; }
+
+.notes-editor { background: #fff; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden; }
+.notes-editor-header { padding: 16px; display:flex; gap:12px; align-items:center; border-bottom:1px solid #f1f5f9; }
+.notes-editor-body { padding: 16px; }
+
+
+.theme-dashboard-button {
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  transition: all 300ms ease;
+}
+
+.theme-dashboard-button:hover {
+  transform: translateY(-1px);
+}
+
+.theme-dashboard-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Admin Theme */
+.theme-admin-sidebar {
+  background-color: #0f172a;
+}
+
+.theme-admin-btn {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.theme-admin-btn:hover {
+  background-color: #4338ca;
+}
+
+.theme-admin-accent {
+  color: #4f46e5;
+}
+
+/* Teacher Theme */
+.theme-teacher-sidebar {
+  background-color: #111827;
+}
+
+.theme-teacher-btn {
+  background-color: #10b981;
+  color: white;
+}
+
+.theme-teacher-btn:hover {
+  background-color: #059669;
+}
+
+.theme-teacher-accent {
+  color: #10b981;
+}
+
+/* Student Theme */
+.theme-student-sidebar {
+  background-color: #111827;
+}
+
+.theme-student-btn {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.theme-student-btn:hover {
+  background-color: #d97706;
+}
+
+.theme-student-accent {
+  color: #f59e0b;
+}
+
+/* Backgrounds */
+.theme-bg-admin,
+.theme-bg-teacher,
+.theme-bg-student {
+  background-color: #f1f5f9;
+}

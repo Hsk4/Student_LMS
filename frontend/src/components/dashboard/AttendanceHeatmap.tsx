@@ -1,10 +1,11 @@
 import React from 'react'
+import { themeClasses } from '@/styles/theme'
 import type { AttendanceHeatmapProps } from '@/types/components'
 
 export const AttendanceHeatmap: React.FC<AttendanceHeatmapProps> = ({ weeks }) => (
-  <div className="bg-white rounded-lg border border-slate-200 p-6" style={{ borderWidth: '0.5px' }}>
+  <div className={`${themeClasses.dashboardCardShell} p-6`}>
     <div className="mb-6">
-      <h3 className="text-base font-semibold text-slate-900 mb-1">Attendance Heatmap</h3>
+      <h3 className={`${themeClasses.heading5} mb-1`}>Attendance Heatmap</h3>
       <p className="text-sm text-slate-500 flex items-center gap-2">
         <span className="inline-block w-2 h-2 rounded-full bg-purple-600"></span>
         Last 4 weeks

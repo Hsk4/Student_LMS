@@ -1,23 +1,16 @@
-type Column<T> = {
-  header: string;
-  accessor: keyof T;
-};
-
-type TableProps<T> = {
-  columns: Column<T>[];
-  data: T[];
-};
+import type { GenericTableProps } from '@/types/components'
+import { themeClasses } from '@/styles/theme'
 
 function Table<T extends Record<string, any>>({
   columns,
   data,
-}: TableProps<T>) {
+}: GenericTableProps<T>) {
   return (
-    <table className="w-full border rounded-lg overflow-hidden">
-      <thead className="bg-gray-100">
+    <table className="theme-table">
+      <thead>
         <tr>
           {columns.map((col, i) => (
-            <th key={i} className="p-3 text-left">
+            <th key={i} className="theme-table th">
               {col.header}
             </th>
           ))}
@@ -25,9 +18,9 @@ function Table<T extends Record<string, any>>({
       </thead>
       <tbody>
         {data.map((row, i) => (
-          <tr key={i} className="border-t">
+          <tr key={i} className="theme-table tbody tr">
             {columns.map((col, j) => (
-              <td key={j} className="p-3">
+              <td key={j} className="theme-table td">
                 {String(row[col.accessor])}
               </td>
             ))}

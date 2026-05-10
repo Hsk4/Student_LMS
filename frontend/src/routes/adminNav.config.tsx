@@ -25,8 +25,8 @@ export const ADMIN_NAV_ITEMS: NavGroup[] = [
   {
     group: 'Management',
     items: [
-      { id: 'teachers', label: 'Teachers', path: '/admin/teachers', icon: Users },
       { id: 'students', label: 'Students', path: '/admin/students', icon: UserCheck },
+      { id: 'teachers', label: 'Teachers', path: '/admin/teachers', icon: Users },
       { id: 'attendance', label: 'Attendance', path: '/admin/attendance', icon: CalendarCheck },
     ],
   },
@@ -35,7 +35,16 @@ export const ADMIN_NAV_ITEMS: NavGroup[] = [
     group: 'System',
     items: [
       { id: 'notes', label: 'Notes', path: '/admin/notes', icon: StickyNote },
-      { id: 'accounts', label: 'Accounts', path: '/admin/accounts', icon: Wallet },
+      {
+        id: 'accounts',
+        label: 'Accounts',
+        path: '/admin/accounts',
+        icon: Wallet,
+        children: [
+          { id: 'accounts-students', label: 'Add Student', path: '/admin/accounts?form=student', icon: UserCheck },
+          { id: 'accounts-teachers', label: 'Add Teacher', path: '/admin/accounts?form=teacher', icon: Users },
+        ],
+      },
     ],
   },
 ]

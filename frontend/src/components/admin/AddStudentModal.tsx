@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Button from '@/components/common/Button'
 import Modal from '@/components/common/Modal'
+import { themeClasses } from '@/styles/theme'
 import type { AddStudentModalProps, AdminStudent } from '@/types/components'
 
 const AddStudentModal: React.FC<AddStudentModalProps> = ({ isOpen, onClose, onAdd }) => {
@@ -48,61 +49,61 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ isOpen, onClose, onAd
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} contentClassName="max-w-2xl overflow-hidden">
-      <div className="border-b border-slate-200 px-6 py-5">
-        <h2 className="text-xl font-bold text-slate-900">Add New Student</h2>
-        <p className="text-sm text-slate-500">Fill in the student details below</p>
+      <div className={themeClasses.modalHeader}>
+        <h2 className={themeClasses.heading4}>Add New Student</h2>
+        <p className={themeClasses.textSm}>Fill in the student details below</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6 p-6">
+      <form onSubmit={handleSubmit} className={`${themeClasses.modalBody} space-y-6`}>
           {/* Personal Information */}
           <div>
-            <h3 className="mb-4 text-lg font-semibold text-slate-900">Personal Information</h3>
+            <h3 className={themeClasses.heading5}>Personal Information</h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Full Name *</label>
+                <label className={themeClasses.label}>Full Name *</label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className={themeClasses.input}
                   placeholder="Enter student name"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Roll Number *</label>
+                <label className={themeClasses.label}>Roll Number *</label>
                 <input
                   type="text"
                   name="rollNumber"
                   value={formData.rollNumber}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className={themeClasses.input}
                   placeholder="e.g., CS-2023-001"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Email *</label>
+                <label className={themeClasses.label}>Email *</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className={themeClasses.input}
                   placeholder="student@email.com"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Phone *</label>
+                <label className={themeClasses.label}>Phone *</label>
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className={themeClasses.input}
                   placeholder="+91-98765-43210"
                 />
               </div>
@@ -111,22 +112,22 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ isOpen, onClose, onAd
 
           {/* Academic Information */}
           <div>
-            <h3 className="mb-4 text-lg font-semibold text-slate-900">Academic Information</h3>
+            <h3 className={themeClasses.heading5}>Academic Information</h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Class *</label>
+                <label className={themeClasses.label}>Class *</label>
                 <input
                   type="text"
                   name="class"
                   value={formData.class}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className={themeClasses.input}
                   placeholder="e.g., 3rd Year - B.Tech CS"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">GPA *</label>
+                <label className={themeClasses.label}>GPA *</label>
                 <input
                   type="number"
                   name="gpa"
@@ -136,28 +137,28 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ isOpen, onClose, onAd
                   min="0"
                   max="4"
                   step="0.1"
-                  className="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className={themeClasses.input}
                   placeholder="3.5"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Join Date *</label>
+                <label className={themeClasses.label}>Join Date *</label>
                 <input
                   type="date"
                   name="joinDate"
                   value={formData.joinDate}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className={themeClasses.input}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Status *</label>
+                <label className={themeClasses.label}>Status *</label>
                 <select
                   name="status"
                   value={formData.status}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className={themeClasses.select}
                 >
                   <option value="Active">Active</option>
                   <option value="Inactive">Inactive</option>
@@ -169,29 +170,29 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ isOpen, onClose, onAd
 
           {/* Guardian Information */}
           <div>
-            <h3 className="mb-4 text-lg font-semibold text-slate-900">Guardian Information</h3>
+            <h3 className={themeClasses.heading5}>Guardian Information</h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Guardian Name *</label>
+                <label className={themeClasses.label}>Guardian Name *</label>
                 <input
                   type="text"
                   name="guardianName"
                   value={formData.guardianName}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className={themeClasses.input}
                   placeholder="Guardian's full name"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Guardian Phone *</label>
+                <label className={themeClasses.label}>Guardian Phone *</label>
                 <input
                   type="tel"
                   name="guardianPhone"
                   value={formData.guardianPhone}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className={themeClasses.input}
                   placeholder="+91-98765-43211"
                 />
               </div>
@@ -199,7 +200,7 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ isOpen, onClose, onAd
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-4 border-t border-slate-200 pt-6">
+          <div className={themeClasses.modalFooter}>
             <Button
               type="button"
               variant="secondary"

@@ -4,6 +4,7 @@ import { StatCard } from '@/components/charts/StatCard'
 import Button from '@/components/common/Button'
 import DataTable from '@/components/common/DataTable'
 import SectionCard from '@/components/common/SectionCard'
+import { themeClasses } from '@/styles/theme'
 import type { AttendanceSectionProps, DataTableColumn } from '@/types/components'
 
 const AttendanceSection: React.FC<AttendanceSectionProps> = ({ attendance }) => {
@@ -98,7 +99,7 @@ const AttendanceSection: React.FC<AttendanceSectionProps> = ({ attendance }) => 
               trend={index === 0 ? { type: 'none', value: '' } : undefined}
             />
           ))}
-          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-center">
+          <div className={`${themeClasses.dashboardCardShell} p-4 text-center`}>
             <p className="text-2xl font-bold text-indigo-600">{attendancePercentage}%</p>
             <p className="text-xs text-slate-500">Overall Attendance</p>
           </div>
@@ -114,7 +115,7 @@ const AttendanceSection: React.FC<AttendanceSectionProps> = ({ attendance }) => 
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+              className={themeClasses.input}
             />
           </div>
           <div className="flex items-center gap-2">
@@ -122,7 +123,7 @@ const AttendanceSection: React.FC<AttendanceSectionProps> = ({ attendance }) => 
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+              className={themeClasses.select}
             >
               <option value="All">All Status</option>
               <option value="Present">Present</option>

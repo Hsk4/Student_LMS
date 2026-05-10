@@ -1,4 +1,5 @@
 import type { DataTableProps } from '@/types/components'
+import { themeClasses } from '@/styles/theme'
 
 function DataTable<T extends Record<string, any>>({
   columns,
@@ -10,21 +11,21 @@ function DataTable<T extends Record<string, any>>({
 }: DataTableProps<T>) {
   if (data.length === 0) {
     return (
-      <div className={`flex h-32 items-center justify-center text-slate-500 ${className}`}>
+      <div className={`theme-card theme-text-base flex h-32 items-center justify-center ${className}`}>
         <p>{emptyMessage}</p>
       </div>
     )
   }
 
   return (
-    <div className={`overflow-x-auto ${className}`}>
-      <table className={`w-full text-sm ${tableClassName}`}>
+    <div className={`theme-table-container ${className}`}>
+      <table className={`theme-table ${tableClassName}`}>
         <thead>
-          <tr className="border-b border-slate-200">
+          <tr>
             {columns.map((column) => (
               <th
                 key={column.header}
-                className={`px-4 py-3 text-left font-semibold text-slate-700 ${column.headerClassName ?? ''}`}
+                className={`theme-table th ${column.headerClassName ?? ''}`}
               >
                 {column.header}
               </th>
@@ -33,9 +34,9 @@ function DataTable<T extends Record<string, any>>({
         </thead>
         <tbody>
           {data.map((row) => (
-            <tr key={rowKey(row)} className="border-b border-slate-100 transition-colors hover:bg-slate-50">
+            <tr key={rowKey(row)} className="theme-table tbody tr">
               {columns.map((column) => (
-                <td key={column.header} className={`px-4 py-3 ${column.className ?? ''}`}>
+                <td key={column.header} className={`theme-table td ${column.className ?? ''}`}>
                   {column.render(row)}
                 </td>
               ))}

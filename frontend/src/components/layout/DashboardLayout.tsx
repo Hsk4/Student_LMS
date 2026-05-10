@@ -8,7 +8,7 @@ export default function DashboardLayout() {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
 
     return(
-        <div className="flex h-screen bg-slate-50">
+        <div className={`flex h-screen theme-bg-admin`}>
             {/* Sidebar */}
             <Sidebar isMobileOpen={isMobileOpen} />
             
@@ -23,7 +23,7 @@ export default function DashboardLayout() {
             {/* Main Content */}
             <div className="flex-1 flex flex-col overflow-hidden">
                 <Topbar onMenuClick={() => setIsMobileOpen(!isMobileOpen)} />
-                <main className="flex-1 overflow-auto">
+                <main className="flex-1 overflow-auto lg:ml-6">
                     <Outlet />
                 </main>
             </div>

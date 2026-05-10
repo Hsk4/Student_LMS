@@ -3,6 +3,7 @@ import { ArrowRight, ShieldCheck, Sparkles, UserCircle2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Button from '@/components/common/Button'
 import type { AuthPageProps, AuthFormValues, AuthRole } from '@/types/components'
+import { themeClasses } from '@/styles/theme'
 
 const roleMeta: Record<AuthRole, { accent: string; icon: React.ReactElement; blurb: string }> = {
   admin: {
@@ -64,7 +65,7 @@ export default function AuthPage({
 
   return (
     <div className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.12)] lg:grid-cols-[1.15fr_0.85fr]">
+      <div className={`${themeClasses.card} mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl overflow-hidden lg:grid-cols-[1.15fr_0.85fr]`}>
         <section className={`relative overflow-hidden bg-linear-to-br ${meta.accent} p-8 text-white sm:p-10 lg:p-12`}>
           <div className="absolute inset-0 bg-white/5" />
           <div className="relative flex h-full flex-col justify-between gap-8">
@@ -99,7 +100,7 @@ export default function AuthPage({
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Academics Portal</p>
                 <h2 className="mt-2 text-2xl font-bold text-slate-900">{isSignup ? 'Create account' : 'Welcome back'}</h2>
               </div>
-              <div className="rounded-2xl bg-slate-100 p-3 text-slate-700">
+              <div className="rounded-[20px] bg-slate-100 p-3 text-slate-700 shadow-sm">
                 <ShieldCheck className="h-6 w-6" />
               </div>
             </div>
@@ -107,7 +108,7 @@ export default function AuthPage({
             <form onSubmit={handleSubmit} className="space-y-5">
               {isSignup && (
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700">Full name</label>
+                  <label className={themeClasses.label}>Full name</label>
                   <input
                     name="fullName"
                     value={form.fullName}
@@ -115,14 +116,14 @@ export default function AuthPage({
                     type="text"
                     required
                     placeholder="Enter your full name"
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+                    className={themeClasses.input}
                   />
                 </div>
               )}
 
               {isSignup && (
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700">Username</label>
+                  <label className={themeClasses.label}>Username</label>
                   <input
                     name="username"
                     value={form.username || ''}
@@ -130,14 +131,14 @@ export default function AuthPage({
                     type="text"
                     required
                     placeholder="Enter your username"
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+                    className={themeClasses.input}
                   />
                 </div>
               )}
 
               {isSignup && (
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700">ID</label>
+                  <label className={themeClasses.label}>ID</label>
                   <input
                     name="id"
                     value={form.id || ''}
@@ -145,14 +146,14 @@ export default function AuthPage({
                     type="text"
                     required
                     placeholder="Enter your ID"
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+                    className={themeClasses.input}
                   />
                 </div>
               )}
 
               {!isSignup && (
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700">ID</label>
+                  <label className={themeClasses.label}>ID</label>
                   <input
                     name="id"
                     value={form.id || ''}
@@ -160,13 +161,13 @@ export default function AuthPage({
                     type="text"
                     required
                     placeholder="Enter your ID"
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+                    className={themeClasses.input}
                   />
                 </div>
               )}
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-700">Email</label>
+                <label className={themeClasses.label}>Email</label>
                 <input
                   name="email"
                   value={form.email}
@@ -174,12 +175,12 @@ export default function AuthPage({
                   type="email"
                   required
                   placeholder="you@example.com"
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+                  className={themeClasses.input}
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-700">Password</label>
+                <label className={themeClasses.label}>Password</label>
                 <input
                   name="password"
                   value={form.password}
@@ -187,13 +188,13 @@ export default function AuthPage({
                   type="password"
                   required
                   placeholder="••••••••"
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+                  className={themeClasses.input}
                 />
               </div>
 
               {isSignup && (
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700">Confirm password</label>
+                  <label className={themeClasses.label}>Confirm password</label>
                   <input
                     name="confirmPassword"
                     value={form.confirmPassword}
@@ -201,18 +202,18 @@ export default function AuthPage({
                     type="password"
                     required
                     placeholder="Repeat password"
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+                    className={themeClasses.input}
                   />
                 </div>
               )}
 
-              <Button type="submit" className="w-full bg-slate-900 hover:bg-slate-800 focus:ring-slate-200">
+              <Button type="submit" className={`w-full bg-slate-900 hover:bg-slate-800 focus:ring-slate-200 ${themeClasses.button}`}>
                 {submitLabel}
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </form>
 
-            <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+            <div className="mt-6 rounded-[20px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
               {switchLabel} <Link to={switchHref} className="font-semibold text-indigo-600 hover:text-indigo-700">here</Link>.
             </div>
           </div>

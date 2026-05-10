@@ -1,6 +1,7 @@
 import { Menu, Bell } from 'lucide-react'
 import Button from '@/components/common/Button'
 import type { TopbarProps } from '@/types/components'
+import { themeClasses } from '@/styles/theme'
 
 export default function Topbar({ onMenuClick }: TopbarProps) {
   const today = new Date();
@@ -27,7 +28,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
     : 'Admin';
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-slate-200">
+    <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm">
       <div className="px-6 py-4 flex items-center justify-between">
         {/* Left section */}
         <div className="flex items-center gap-4 flex-1">
@@ -40,7 +41,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
           </Button>
           
           <div>
-            <h1 className="text-xl font-semibold text-slate-900">{greeting}, {userName} {emoji}</h1>
+            <h1 className={themeClasses.heading4}>{greeting}, {userName} {emoji}</h1>
             <p className="text-xs text-slate-500 mt-0.5">{dateStr} · Term 2, Week {week}</p>
           </div>
         </div>

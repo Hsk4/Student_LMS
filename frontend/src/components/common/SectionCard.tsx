@@ -1,5 +1,6 @@
 import React from 'react'
 import type { SectionCardProps } from '@/types/components'
+import { themeClasses } from '@/styles/theme'
 
 const SectionCard: React.FC<SectionCardProps> = ({
   title,
@@ -12,16 +13,16 @@ const SectionCard: React.FC<SectionCardProps> = ({
   action,
 }) => {
   return (
-    <section className={`rounded-lg border border-slate-200 bg-white ${className}`} style={{ borderWidth: '0.5px' }}>
-      <div className={`flex items-center justify-between gap-4 border-b border-slate-200 px-6 py-4 ${headerClassName}`} style={{ borderBottomWidth: '0.5px' }}>
+    <section className={`theme-card ${className}`}>
+      <div className={`flex items-center justify-between gap-4 theme-modal-header ${headerClassName}`}>
         <div>
-          <h2 className="text-xl font-semibold text-slate-900">{title}</h2>
-          {description && <p className="text-sm text-slate-500">{description}</p>}
+          <h2 className="theme-h4">{title}</h2>
+          {description && <p className="theme-text-sm">{description}</p>}
         </div>
         <div className="flex items-center gap-3">
           {action}
           {badge && (
-            <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-700">
+            <span className="theme-badge theme-badge-info">
               {badge}
             </span>
           )}

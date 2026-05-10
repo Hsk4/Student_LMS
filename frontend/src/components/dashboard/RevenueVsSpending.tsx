@@ -1,4 +1,5 @@
 import type { RevenueVsSpendingChartProps } from '@/types/components'
+import { themeClasses } from '@/styles/theme'
 
 export const RevenueVsSpendingChart: React.FC<RevenueVsSpendingChartProps> = ({
 
@@ -7,10 +8,10 @@ export const RevenueVsSpendingChart: React.FC<RevenueVsSpendingChartProps> = ({
     months
 }) => (
 
-    <div className="bg-white rounded-lg border border-slate-200 p-6" style={{ borderWidth: '0.5px' }}>
+    <div className={`${themeClasses.dashboardCardShell} p-6`}>
     <div className="flex items-center justify-between mb-6">
-      <h3 className="text-base font-semibold text-slate-900">Revenue vs Spending</h3>
-      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700">Monthly</span>
+      <h3 className={themeClasses.heading5}>Revenue vs Spending</h3>
+      <span className={themeClasses.badgeInfo}>Monthly</span>
     </div>
     
     <div className="flex items-end justify-between gap-2 h-40">

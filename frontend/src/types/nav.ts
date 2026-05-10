@@ -6,6 +6,7 @@ export interface NavLinkItem {
     path: string;
     icon: LucideIcon;
     badge?: string | number;
+    children?: NavLinkItem[];
 }
 
 

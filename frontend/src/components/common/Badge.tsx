@@ -4,20 +4,21 @@ import type { BadgeProps } from '@/types/components'
 const Badge: React.FC<BadgeProps> = ({ label, type = 'default' }) => {
     
 
-    const styles : Record<string, string> = {
-        "default" : "bg-gray-200 text-gray-800",
-        "success" : "bg-green-200 text-green-800",
-        "danger" : "bg-red-200 text-red-800",
-        "warning" : "bg-yellow-200 text-yellow-800",
-        "info" : "bg-blue-200 text-blue-800"
-};
+        const styles : Record<string, string> = {
+            "default" : "theme-badge",
+            "success" : "theme-badge theme-badge-success",
+            "error" : "theme-badge theme-badge-danger",
+            // keep alias for older usages
+            "danger" : "theme-badge theme-badge-danger",
+            "warning" : "theme-badge theme-badge-warning",
+            "info" : "theme-badge theme-badge-info"
+        };
 
-
-    return (
- <span className={`px-2 py-1 text-sm rounded ${styles[type]}`}>
-      {label}
-    </span>    
-    )
+        return (
+            <span className={styles[type] || styles.default}>
+                {label}
+            </span>
+        )
 }
 
 export default Badge

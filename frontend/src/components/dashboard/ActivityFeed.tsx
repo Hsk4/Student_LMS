@@ -1,5 +1,6 @@
 import React from 'react'
 import { UserPlus, CheckCircle, CreditCard, AlertCircle, MessageSquare } from 'lucide-react'
+import { themeClasses } from '@/styles/theme'
 import type { ActivityFeedProps } from '@/types/components'
 
 /**
@@ -24,15 +25,15 @@ const getActivityIcon = (type: string): React.ReactNode => {
 };
 
 export const ActivityFeed: React.FC<ActivityFeedProps> = ({ feed }) => (
-  <div className="bg-white rounded-lg border border-slate-200 overflow-hidden" style={{ borderWidth: '0.5px' }}>
-    <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between" style={{ borderBottomWidth: '0.5px' }}>
+  <div className={themeClasses.dashboardCardShell}>
+    <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <h3 className="text-base font-semibold text-slate-900">Live Activity</h3>
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
+        <h3 className={themeClasses.heading5}>Live Activity</h3>
+        <span className={`${themeClasses.badgeInfo} gap-1`}>
           <span>✦</span> Innovative
         </span>
       </div>
-      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+      <span className={themeClasses.badgeSuccess + ' gap-2'}>
         <span className="inline-block w-2 h-2 rounded-full bg-green-500"></span> Live
       </span>
     </div>

@@ -21,7 +21,7 @@ export const STUDENT_NAV_ITEMS: NavGroup[] = [
     group: 'Support',
     items: [
       { id: 'contact', label: 'Contact Teachers', path: '/student/contact', icon: Mail },
-      { id: 'help', label: 'Help Us', path: '/student/help', icon: HelpCircle },
+      { id: 'help', label: 'Essentials', path: '/student/help', icon: HelpCircle },
     ],
   },
 ]
