@@ -1,20 +1,32 @@
 import React, { useState } from 'react'
 import { Search, MoreVertical } from 'lucide-react'
-import type { AdminTeachersSectionProps, DataTableColumn } from '@/types/components'
+import type { AdminTeachersSectionProps, DataTableColumn, AdminTeacher } from '@/types/components'
 import SectionCard from '@/components/common/SectionCard'
 import DataTable from '@/components/common/DataTable'
+import TeacherDetailModal from '@/components/admin/TeacherDetailModal'
 import { themeClasses } from '@/styles/theme'
 
 export const TeachersSection: React.FC<AdminTeachersSectionProps> = ({ teachers }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [openMenuId, setOpenMenuId] = useState<string | null>(null)
+  const [selectedTeacher, setSelectedTeacher] = useState<AdminTeacher | null>(null)
+  const [showTeacherModal, setShowTeacherModal] = useState(false)
 
   const filteredTeachers = teachers.filter((teacher) =>
     teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) || teacher.email.toLowerCase().includes(searchQuery.toLowerCase()) || teacher.subject.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  const handleAction = (teacherId: string, action: string) => {
-    console.log(`Action: ${action} for teacher: ${teacherId}`)
+  const handleAction = (teacher: AdminTeacher, action: string) => {
+    if (action === 'view') {
+      setSelectedTeacher(teacher)
+      setShowTeacherModal(true)
+    } else if (action === 'edit') {
+      console.log(`Edit teacher: ${teacher.id}`)
+    } else if (action === 'deactivate') {
+      console.log(`Deactivate teacher: ${teacher.id}`)
+    } else if (action === 'delete') {
+      console.log(`Delete teacher: ${teacher.id}`)
+    }
     setOpenMenuId(null)
   }
 
@@ -93,16 +105,16 @@ export const TeachersSection: React.FC<AdminTeachersSectionProps> = ({ teachers 
           </button>
           {openMenuId === teacher.id && (
             <div className="absolute right-0 mt-2 w-40 bg-white border border-slate-200 rounded-lg shadow-lg z-10">
-              <button onClick={() => handleAction(teacher.id, 'view')} className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+              <button onClick={() => handleAction(teacher, 'view')} className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
                 View Details
               </button>
-              <button onClick={() => handleAction(teacher.id, 'edit')} className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+              <button onClick={() => handleAction(teacher, 'edit')} className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
                 Edit
               </button>
-              <button onClick={() => handleAction(teacher.id, 'deactivate')} className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+              <button onClick={() => handleAction(teacher, 'deactivate')} className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
                 Deactivate
               </button>
-              <button onClick={() => handleAction(teacher.id, 'delete')} className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 border-t border-slate-200">
+              <button onClick={() => handleAction(teacher, 'delete')} className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 border-t border-slate-200">
                 Delete
               </button>
             </div>
@@ -113,27 +125,30 @@ export const TeachersSection: React.FC<AdminTeachersSectionProps> = ({ teachers 
   ]
 
   return (
-    <SectionCard title="Teachers" description="Complete teacher directory" badge={`${filteredTeachers.length} Total`}>
-      <div className="px-6 pb-6 pt-4">
-        <div className="mb-4 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
-          <input
-            type="text"
-            placeholder="Search teachers by name, email, or subject..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+    <>
+      <SectionCard title="Teachers" description="Complete teacher directory" badge={`${filteredTeachers.length} Total`}>
+        <div className="px-6 pb-6 pt-4">
+          <div className="mb-4 relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+            <input
+              type="text"
+              placeholder="Search teachers by name, email, or subject..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+          <DataTable
+            columns={columns}
+            data={filteredTeachers}
+            rowKey={(teacher) => teacher.id}
+            emptyMessage="No teachers found"
+            tableClassName="min-w-[1200px]"
           />
         </div>
-        <DataTable
-          columns={columns}
-          data={filteredTeachers}
-          rowKey={(teacher) => teacher.id}
-          emptyMessage="No teachers found"
-          tableClassName="min-w-[1200px]"
-        />
-      </div>
-    </SectionCard>
+      </SectionCard>
+      <TeacherDetailModal teacher={selectedTeacher} isOpen={showTeacherModal} onClose={() => setShowTeacherModal(false)} />
+    </>
   )
 }
 

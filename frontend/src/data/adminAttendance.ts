@@ -4,6 +4,7 @@ export const dummyAttendance: AttendanceRecord[] = [
   {
     id: 'a-001',
     studentName: 'Priya Sharma',
+    studentId: 'STU-2023-001',
     rollNumber: 'CS-2023-001',
     class: '3rd Year - B.Tech CS',
     date: '2024-01-15',
@@ -13,6 +14,7 @@ export const dummyAttendance: AttendanceRecord[] = [
   {
     id: 'a-002',
     studentName: 'Arjun Patel',
+    studentId: 'STU-2023-002',
     rollNumber: 'CS-2023-002',
     class: '3rd Year - B.Tech CS',
     date: '2024-01-15',
@@ -22,6 +24,7 @@ export const dummyAttendance: AttendanceRecord[] = [
   {
     id: 'a-003',
     studentName: 'Neha Gupta',
+    studentId: 'STU-2023-003',
     rollNumber: 'CS-2023-003',
     class: '2nd Year - B.Tech CS',
     date: '2024-01-15',
@@ -31,6 +34,7 @@ export const dummyAttendance: AttendanceRecord[] = [
   {
     id: 'a-004',
     studentName: 'Priya Sharma',
+    studentId: 'STU-2023-001',
     rollNumber: 'CS-2023-001',
     class: '3rd Year - B.Tech CS',
     date: '2024-01-16',
@@ -40,6 +44,7 @@ export const dummyAttendance: AttendanceRecord[] = [
   {
     id: 'a-005',
     studentName: 'Arjun Patel',
+    studentId: 'STU-2023-002',
     rollNumber: 'CS-2023-002',
     class: '3rd Year - B.Tech CS',
     date: '2024-01-16',

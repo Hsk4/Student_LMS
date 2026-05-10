@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Calendar, Filter } from 'lucide-react'
+import { Calendar, Filter, Search } from 'lucide-react'
 import { StatCard } from '@/components/charts/StatCard'
 import Button from '@/components/common/Button'
 import DataTable from '@/components/common/DataTable'
@@ -8,14 +8,26 @@ import { themeClasses } from '@/styles/theme'
 import type { AttendanceSectionProps, DataTableColumn } from '@/types/components'
 
 const AttendanceSection: React.FC<AttendanceSectionProps> = ({ attendance }) => {
+  const [searchQuery, setSearchQuery] = useState<string>('')
   const [selectedDate, setSelectedDate] = useState<string>('')
   const [selectedStatus, setSelectedStatus] = useState<string>('All')
+  const [selectedCategory, setSelectedCategory] = useState<string>('All')
 
   const filteredAttendance = attendance.filter((record) => {
+    const searchLower = searchQuery.toLowerCase()
+    const searchMatch =
+      !searchQuery ||
+      record.studentName.toLowerCase().includes(searchLower) ||
+      record.studentId.toLowerCase().includes(searchLower) ||
+      record.rollNumber.toLowerCase().includes(searchLower)
     const dateMatch = !selectedDate || record.date === selectedDate
     const statusMatch = selectedStatus === 'All' || record.status === selectedStatus
-    return dateMatch && statusMatch
+    const categoryMatch = selectedCategory === 'All' || record.class === selectedCategory
+    return searchMatch && dateMatch && statusMatch && categoryMatch
   })
+
+  // Get unique categories from attendance data
+  const categories = ['All', ...new Set(attendance.map((r) => r.class))]
 
   const stats = {
     total: filteredAttendance.length,
@@ -57,6 +69,7 @@ const AttendanceSection: React.FC<AttendanceSectionProps> = ({ attendance }) => 
 
   const columns: DataTableColumn<AttendanceSectionProps['attendance'][number]>[] = [
     { header: 'Student Name', render: (record: AttendanceSectionProps['attendance'][number]) => <span className="font-medium text-slate-900">{record.studentName}</span> },
+    { header: 'Student ID', className: 'whitespace-nowrap', render: (record: AttendanceSectionProps['attendance'][number]) => <span className="font-mono text-slate-700">{record.studentId}</span> },
     { header: 'Roll Number', className: 'whitespace-nowrap', render: (record: AttendanceSectionProps['attendance'][number]) => <span className="font-mono text-slate-700">{record.rollNumber}</span> },
     { header: 'Class', render: (record: AttendanceSectionProps['attendance'][number]) => <span className="text-slate-600">{record.class}</span> },
     { header: 'Date', className: 'whitespace-nowrap', render: (record: AttendanceSectionProps['attendance'][number]) => <span className="text-slate-600">{record.date}</span> },
@@ -106,17 +119,36 @@ const AttendanceSection: React.FC<AttendanceSectionProps> = ({ attendance }) => 
         </div>
       </div>
 
+      {/* Search Bar */}
+      <div className="mb-6 px-6 pt-6">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+          <input
+            type="text"
+            placeholder="Search by student name, student ID, or roll number..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+        </div>
+      </div>
+
       {/* Filters */}
-      <div className="mb-6 flex flex-col gap-4 px-6 pt-6 md:flex-row md:items-center md:justify-between">
+      <div className="mb-6 flex flex-col gap-4 px-6 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-col gap-3 md:flex-row md:gap-4">
           <div className="flex items-center gap-2">
-            <Calendar size={18} className="text-slate-500" />
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              className={themeClasses.input}
-            />
+            <Filter size={18} className="text-slate-500" />
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className={themeClasses.select}
+            >
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex items-center gap-2">
             <Filter size={18} className="text-slate-500" />
@@ -132,17 +164,28 @@ const AttendanceSection: React.FC<AttendanceSectionProps> = ({ attendance }) => 
               <option value="Excused">Excused</option>
             </select>
           </div>
+          <div className="flex items-center gap-2">
+            <Calendar size={18} className="text-slate-500" />
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className={themeClasses.input}
+            />
+          </div>
         </div>
-        {(selectedDate || selectedStatus !== 'All') && (
+        {(searchQuery || selectedDate || selectedStatus !== 'All' || selectedCategory !== 'All') && (
           <Button
             onClick={() => {
+              setSearchQuery('')
               setSelectedDate('')
               setSelectedStatus('All')
+              setSelectedCategory('All')
             }}
             variant="secondary"
             className="px-3 py-2 text-sm"
           >
-            Clear Filters
+            Clear All
           </Button>
         )}
       </div>

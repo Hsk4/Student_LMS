@@ -1,5 +1,4 @@
 import type { DataTableProps } from '@/types/components'
-import { themeClasses } from '@/styles/theme'
 
 function DataTable<T extends Record<string, any>>({
   columns,

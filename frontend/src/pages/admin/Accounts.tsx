@@ -229,8 +229,6 @@ const StudentAddForm: React.FC<{ onAdd: (s: Omit<AdminStudent, 'id'>) => void; o
     phone: '',
     password: '',
     homeroomTeacher: '',
-    signOnTime: '08:30 AM',
-    signOffTime: '04:00 PM',
     semesterFees: 150000,
     previousSchool: '',
     class: '',
@@ -258,8 +256,6 @@ const StudentAddForm: React.FC<{ onAdd: (s: Omit<AdminStudent, 'id'>) => void; o
       phone: '',
       password: '',
       homeroomTeacher: '',
-      signOnTime: '08:30 AM',
-      signOffTime: '04:00 PM',
       semesterFees: 150000,
       previousSchool: '',
       class: '',
@@ -302,16 +298,6 @@ const StudentAddForm: React.FC<{ onAdd: (s: Omit<AdminStudent, 'id'>) => void; o
         <div>
           <label className={themeClasses.label}>Homeroom Teacher *</label>
           <input name="homeroomTeacher" value={formData.homeroomTeacher} onChange={handleChange} required className={themeClasses.input} />
-        </div>
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className={themeClasses.label}>Sign On Time *</label>
-            <input name="signOnTime" value={formData.signOnTime} onChange={handleChange} required className={themeClasses.input} />
-          </div>
-          <div>
-            <label className={themeClasses.label}>Sign Off Time *</label>
-            <input name="signOffTime" value={formData.signOffTime} onChange={handleChange} required className={themeClasses.input} />
-          </div>
         </div>
         <div>
           <label className={themeClasses.label}>Semester Fees *</label>

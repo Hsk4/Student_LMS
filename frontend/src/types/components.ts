@@ -36,6 +36,7 @@ export interface ModalProps {
   className?: string
   contentClassName?: string
   hideCloseButton?: boolean
+  fullScreen?: boolean
 }
 
 export interface PaginationProps {
@@ -360,8 +361,6 @@ export interface AdminStudent {
   phone: string
   password: string
   homeroomTeacher: string
-  signOnTime: string
-  signOffTime: string
   semesterFees: number
   previousSchool: string
   guardianName: string
@@ -389,6 +388,7 @@ export interface AddStudentModalProps {
 export interface AttendanceRecord {
   id: string
   studentName: string
+  studentId: string
   rollNumber: string
   class: string
   date: string

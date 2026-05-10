@@ -1,4 +1,4 @@
-import type { AdminStudent } from '@/types/components'
+﻿import type { AdminStudent } from '@/types/components'
 
 export const dummyStudents: AdminStudent[] = [
   {
@@ -12,11 +12,9 @@ export const dummyStudents: AdminStudent[] = [
     phone: '+91-98765-43210',
     password: 'pass123',
     homeroomTeacher: 'Dr. Aisha Rahman',
-    signOnTime: '08:30 AM',
-    signOffTime: '04:00 PM',
     semesterFees: 150000,
-    previousSchool: 'St. Mary School, Delhi',
-    guardianName: 'Mr. Rajesh Sharma',
+    previousSchool: 'Delhi Public School',
+    guardianName: 'Rajesh Sharma',
     guardianPhone: '+91-98765-43211',
     status: 'Active',
     gpa: 3.8,
@@ -33,11 +31,9 @@ export const dummyStudents: AdminStudent[] = [
     phone: '+91-98765-43212',
     password: 'pass123',
     homeroomTeacher: 'Dr. Aisha Rahman',
-    signOnTime: '08:30 AM',
-    signOffTime: '04:00 PM',
     semesterFees: 150000,
-    previousSchool: 'Delhi Public School',
-    guardianName: 'Mr. Vikram Patel',
+    previousSchool: "St. Xavier's School",
+    guardianName: 'Vikram Patel',
     guardianPhone: '+91-98765-43213',
     status: 'Active',
     gpa: 3.6,
@@ -54,11 +50,9 @@ export const dummyStudents: AdminStudent[] = [
     phone: '+91-98765-43214',
     password: 'pass123',
     homeroomTeacher: 'Prof. Rajesh Kumar',
-    signOnTime: '09:00 AM',
-    signOffTime: '04:30 PM',
     semesterFees: 150000,
-    previousSchool: 'Cathedral School, Mumbai',
-    guardianName: 'Mrs. Anjali Gupta',
+    previousSchool: 'Bharatiya Vidyapith',
+    guardianName: 'Suresh Gupta',
     guardianPhone: '+91-98765-43215',
     status: 'Active',
     gpa: 3.9,

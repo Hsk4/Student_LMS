@@ -462,7 +462,7 @@ export default function StudentHelp() {
 
       {/* Create Template Modal */}
       {showCreateModal && (
-        <Modal onClose={() => setShowCreateModal(false)}>
+        <Modal isOpen={showCreateModal} onClose={() => setShowCreateModal(false)}>
           <div style={{ width: '90vw', maxWidth: 600, maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
               <h2 className="theme-h3">Create Your Template</h2>

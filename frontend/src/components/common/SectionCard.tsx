@@ -1,6 +1,5 @@
 import React from 'react'
 import type { SectionCardProps } from '@/types/components'
-import { themeClasses } from '@/styles/theme'
 
 const SectionCard: React.FC<SectionCardProps> = ({
   title,

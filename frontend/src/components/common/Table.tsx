@@ -1,5 +1,4 @@
 import type { GenericTableProps } from '@/types/components'
-import { themeClasses } from '@/styles/theme'
 
 function Table<T extends Record<string, any>>({
   columns,

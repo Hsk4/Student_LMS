@@ -2,16 +2,27 @@ import React, { useState } from 'react'
 import { GraduationCap, MoreVertical } from 'lucide-react'
 import SectionCard from '@/components/common/SectionCard'
 import DataTable from '@/components/common/DataTable'
+import StudentDetailModal from '@/components/admin/StudentDetailModal'
 import { themeClasses } from '@/styles/theme'
-import type { AdminStudentsSectionProps, DataTableColumn } from '@/types/components'
+import type { AdminStudentsSectionProps, DataTableColumn, AdminStudent } from '@/types/components'
 
 const StudentsSection: React.FC<AdminStudentsSectionProps> = ({ students }) => {
   const [openMenuId, setOpenMenuId] = useState<string | null>(null)
+  const [selectedStudent, setSelectedStudent] = useState<AdminStudent | null>(null)
+  const [showStudentModal, setShowStudentModal] = useState(false)
 
-  const handleAction = (studentId: string, action: string) => {
-    console.log(`Action: ${action} for student: ${studentId}`)
+  const handleAction = (student: AdminStudent, action: string) => {
+    if (action === 'view') {
+      setSelectedStudent(student)
+      setShowStudentModal(true)
+    } else if (action === 'edit') {
+      console.log(`Edit student: ${student.id}`)
+    } else if (action === 'deactivate') {
+      console.log(`Deactivate student: ${student.id}`)
+    } else if (action === 'delete') {
+      console.log(`Delete student: ${student.id}`)
+    }
     setOpenMenuId(null)
-    // Add your action handlers here (Edit, Delete, View Details, etc.)
   }
 
   const columns: DataTableColumn<AdminStudentsSectionProps['students'][number]>[] = [
@@ -51,15 +62,6 @@ const StudentsSection: React.FC<AdminStudentsSectionProps> = ({ students }) => {
       header: 'Homeroom Teacher',
       className: 'min-w-[150px]',
       render: (student) => <span className="text-slate-600">{student.homeroomTeacher}</span>,
-    },
-    {
-      header: 'Sign On/Off',
-      className: 'whitespace-nowrap',
-      render: (student) => (
-        <span className="text-xs text-slate-600">
-          {student.signOnTime} - {student.signOffTime}
-        </span>
-      ),
     },
     {
       header: 'Semester Fees',
@@ -108,25 +110,25 @@ const StudentsSection: React.FC<AdminStudentsSectionProps> = ({ students }) => {
           {openMenuId === student.id && (
             <div className="absolute right-0 mt-2 w-40 bg-white border border-slate-200 rounded-lg shadow-lg z-10">
               <button
-                onClick={() => handleAction(student.id, 'view')}
+                onClick={() => handleAction(student, 'view')}
                 className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
               >
                 View Details
               </button>
               <button
-                onClick={() => handleAction(student.id, 'edit')}
+                onClick={() => handleAction(student, 'edit')}
                 className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
               >
                 Edit
               </button>
               <button
-                onClick={() => handleAction(student.id, 'deactivate')}
+                onClick={() => handleAction(student, 'deactivate')}
                 className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
               >
                 Deactivate
               </button>
               <button
-                onClick={() => handleAction(student.id, 'delete')}
+                onClick={() => handleAction(student, 'delete')}
                 className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 border-t border-slate-200"
               >
                 Delete
@@ -139,15 +141,18 @@ const StudentsSection: React.FC<AdminStudentsSectionProps> = ({ students }) => {
   ]
 
   return (
-    <SectionCard title="Students" description="Complete student directory" badge={`${students.length} Total`}>
-      <DataTable
-        columns={columns}
-        data={students}
-        rowKey={(student) => student.id}
-        emptyMessage="No students found"
-        tableClassName="min-w-[1400px]"
-      />
-    </SectionCard>
+    <>
+      <SectionCard title="Students" description="Complete student directory" badge={`${students.length} Total`}>
+        <DataTable
+          columns={columns}
+          data={students}
+          rowKey={(student) => student.id}
+          emptyMessage="No students found"
+          tableClassName="min-w-[1400px]"
+        />
+      </SectionCard>
+      <StudentDetailModal student={selectedStudent} isOpen={showStudentModal} onClose={() => setShowStudentModal(false)} />
+    </>
   )
 }
 

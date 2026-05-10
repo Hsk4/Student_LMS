@@ -1,5 +1,5 @@
 import React from 'react'
-import { X, Mail, Phone, User, Calendar, DollarSign, Users, TrendingUp, BookOpen, Award } from 'lucide-react'
+import { X, Mail, Phone, Calendar, DollarSign, Users, TrendingUp, BookOpen, Award } from 'lucide-react'
 import Modal from '@/components/common/Modal'
 import type { AdminTeacher } from '@/types/components'
 import { themeClasses } from '@/styles/theme'
@@ -14,9 +14,8 @@ const TeacherDetailModal: React.FC<TeacherDetailModalProps> = ({ teacher, isOpen
   if (!isOpen || !teacher) return null
 
   return (
-    <Modal onClose={onClose}>
-      <div style={{ width: '90vw', maxWidth: 700, maxHeight: '90vh', overflowY: 'auto' }}>
-        {/* Header with close button */}
+    <Modal isOpen={isOpen} onClose={onClose} fullScreen contentClassName="overflow-y-auto">
+      <div className="min-h-screen w-full bg-white">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 24, borderBottom: '1px solid #e2e8f0' }}>
           <h2 className="theme-h3">Teacher Profile</h2>
           <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}>
@@ -24,7 +23,6 @@ const TeacherDetailModal: React.FC<TeacherDetailModalProps> = ({ teacher, isOpen
           </button>
         </div>
 
-        {/* Profile Content */}
         <div style={{ padding: 24 }}>
           {/* Profile Header */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 32, paddingBottom: 24, borderBottom: '1px solid #e2e8f0' }}>
@@ -55,7 +53,7 @@ const TeacherDetailModal: React.FC<TeacherDetailModalProps> = ({ teacher, isOpen
           </div>
 
           {/* Information Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
             {/* Left Column */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               {/* Professional Information */}
@@ -222,7 +220,7 @@ const TeacherDetailModal: React.FC<TeacherDetailModalProps> = ({ teacher, isOpen
             <h3 className="theme-text-sm" style={{ fontWeight: 600, marginBottom: 12, color: '#64748b', textTransform: 'uppercase' }}>
               Additional Information
             </h3>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               <div
                 className="theme-card"
                 style={{ padding: 12, display: 'flex', alignItems: 'center', gap: 12, backgroundColor: '#f8fafc' }}
