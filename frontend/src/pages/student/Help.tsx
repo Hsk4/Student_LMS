@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BookOpen, Code, Eye, ChevronDown, ChevronUp, Copy, Check, FileText, Lightbulb, MessageSquare, ArrowRight, Plus, Trash2, X } from 'lucide-react'
+import { BookOpen, Code, Eye, ChevronDown, ChevronUp, Copy, Check, FileText, Lightbulb, MessageSquare, ArrowRight, Plus, Trash2, X, Type } from 'lucide-react'
 import SectionCard from '@/components/common/SectionCard'
 import Modal from '@/components/common/Modal'
 import { HELP_ESSENTIALS, HELP_TEMPLATES } from '@/data/helpData'
@@ -110,6 +110,15 @@ export default function StudentHelp() {
         >
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
             <Code size={16} /> Markdown Guide
+          </span>
+        </button>
+        <button
+          onClick={() => setActiveTab('fonts')}
+          className="theme-btn-sm theme-btn"
+          style={{ borderBottom: activeTab === 'fonts' ? '2px solid #4f46e5' : '2px solid transparent' }}
+        >
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            <Type size={16} /> Font Guide
           </span>
         </button>
       </div>
@@ -517,6 +526,117 @@ export default function StudentHelp() {
             </div>
           </div>
         </Modal>
+      )}
+
+      {/* Font Guide Tab */}
+      {activeTab === 'fonts' && (
+        <div style={{ marginTop: 12 }}>
+          <SectionCard title="Custom Font Manager Guide" description="Learn how to upload and use custom fonts in your notes">
+            <div style={{ padding: 16 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {/* Step 1 */}
+                <div className="theme-card" style={{ padding: 12, backgroundColor: '#f0f9ff' }}>
+                  <h3 className="theme-text-base" style={{ fontWeight: 700, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, backgroundColor: '#4f46e5', color: '#fff', borderRadius: '50%', fontWeight: 700 }}>1</span>
+                    Open a Note in Edit Mode
+                  </h3>
+                  <p className="theme-text-sm" style={{ color: '#475569', lineHeight: 1.6 }}>
+                    Navigate to your Notes section and select any note or create a new one. Click the <strong>Edit</strong> button to open the markdown editor.
+                  </p>
+                </div>
+
+                {/* Step 2 */}
+                <div className="theme-card" style={{ padding: 12, backgroundColor: '#f0fdf4' }}>
+                  <h3 className="theme-text-base" style={{ fontWeight: 700, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, backgroundColor: '#10b981', color: '#fff', borderRadius: '50%', fontWeight: 700 }}>2</span>
+                    Click the Font Manager Button
+                  </h3>
+                  <p className="theme-text-sm" style={{ color: '#475569', lineHeight: 1.6 }}>
+                    In the toolbar above the editor, find and click the <strong>Font Manager</strong> button. This will open the font settings panel with upload options.
+                  </p>
+                </div>
+
+                {/* Step 3 */}
+                <div className="theme-card" style={{ padding: 12, backgroundColor: '#fdf2f8' }}>
+                  <h3 className="theme-text-base" style={{ fontWeight: 700, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, backgroundColor: '#ec4899', color: '#fff', borderRadius: '50%', fontWeight: 700 }}>3</span>
+                    Upload Your Custom Font
+                  </h3>
+                  <p className="theme-text-sm" style={{ color: '#475569', lineHeight: 1.6, marginBottom: 8 }}>
+                    Click <strong>Upload Font</strong> and select a font file from your computer. Supported formats:
+                  </p>
+                  <ul style={{ marginLeft: 16, color: '#475569' }}>
+                    <li><strong>.ttf</strong> (TrueType Font)</li>
+                    <li><strong>.otf</strong> (OpenType Font)</li>
+                    <li><strong>.woff</strong> (Web Open Font Format)</li>
+                    <li><strong>.woff2</strong> (Web Open Font Format 2)</li>
+                  </ul>
+                </div>
+
+                {/* Step 4 */}
+                <div className="theme-card" style={{ padding: 12, backgroundColor: '#fffbeb' }}>
+                  <h3 className="theme-text-base" style={{ fontWeight: 700, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, backgroundColor: '#f59e0b', color: '#fff', borderRadius: '50%', fontWeight: 700 }}>4</span>
+                    Set Default Fonts
+                  </h3>
+                  <p className="theme-text-sm" style={{ color: '#475569', lineHeight: 1.6, marginBottom: 8 }}>
+                    Use the <strong>Text Font Defaults</strong> section to assign fonts to:
+                  </p>
+                  <ul style={{ marginLeft: 16, color: '#475569' }}>
+                    <li><strong>Body:</strong> Main text in your notes</li>
+                    <li><strong>Code Blocks:</strong> Monospace font for code</li>
+                    <li><strong>Quotes:</strong> Font for blockquotes</li>
+                  </ul>
+                </div>
+
+                {/* Step 5 */}
+                <div className="theme-card" style={{ padding: 12, backgroundColor: '#eef2ff' }}>
+                  <h3 className="theme-text-base" style={{ fontWeight: 700, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, backgroundColor: '#4f46e5', color: '#fff', borderRadius: '50%', fontWeight: 700 }}>5</span>
+                    Customize Heading Fonts & Colors
+                  </h3>
+                  <p className="theme-text-sm" style={{ color: '#475569', lineHeight: 1.6, marginBottom: 8 }}>
+                    In the <strong>Heading Defaults</strong> section, set individual fonts and colors for H1 through H6. Each heading level can have:
+                  </p>
+                  <ul style={{ marginLeft: 16, color: '#475569' }}>
+                    <li><strong>Font family:</strong> Choose from uploaded or system fonts</li>
+                    <li><strong>Color:</strong> Pick any color using the color picker</li>
+                  </ul>
+                </div>
+
+                {/* Step 6 */}
+                <div className="theme-card" style={{ padding: 12, backgroundColor: '#f5f3ff' }}>
+                  <h3 className="theme-text-base" style={{ fontWeight: 700, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, backgroundColor: '#7c3aed', color: '#fff', borderRadius: '50%', fontWeight: 700 }}>6</span>
+                    Preview Your Fonts
+                  </h3>
+                  <p className="theme-text-sm" style={{ color: '#475569', lineHeight: 1.6 }}>
+                    The <strong>Imported Fonts</strong> section shows live previews of all fonts you've uploaded. You can rename them here and see exactly how they look before applying.
+                  </p>
+                </div>
+
+                {/* Step 7 */}
+                <div className="theme-card" style={{ padding: 12, backgroundColor: '#ecfdf5' }}>
+                  <h3 className="theme-text-base" style={{ fontWeight: 700, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, backgroundColor: '#059669', color: '#fff', borderRadius: '50%', fontWeight: 700 }}>7</span>
+                    Switch to Preview Mode
+                  </h3>
+                  <p className="theme-text-sm" style={{ color: '#475569', lineHeight: 1.6 }}>
+                    Click the <strong>Preview</strong> button to see your note rendered with all the custom fonts and colors applied. Your headings, body text, code blocks, and quotes will display with your selected styles.
+                  </p>
+                </div>
+
+                {/* Important Note */}
+                <div className="theme-card" style={{ padding: 12, backgroundColor: '#fef2f2', borderLeft: '4px solid #dc2626' }}>
+                  <h4 className="theme-text-sm" style={{ fontWeight: 700, marginBottom: 8 }}>💡 Important Note</h4>
+                  <p className="theme-text-sm" style={{ color: '#475569', lineHeight: 1.6 }}>
+                    Font Manager settings are <strong>session-only</strong> and will reset when you refresh the page. This is a preview feature. In future updates, we'll add persistent storage so your custom fonts and preferences are saved automatically.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </SectionCard>
+        </div>
       )}
     </div>
   )

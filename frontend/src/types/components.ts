@@ -165,7 +165,7 @@ export interface GenericTableProps<T> {
 }
 
 // Help tabs
-export type HelpTab = 'essentials' | 'templates' | 'markdown'
+export type HelpTab = 'essentials' | 'templates' | 'markdown' | 'fonts'
 
 // ============================================================================
 // Dashboard Components
