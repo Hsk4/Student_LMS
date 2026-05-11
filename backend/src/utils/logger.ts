@@ -1,6 +1,6 @@
 import winston from 'winston';
 
-const logger = winston.createLogger({
+export const logger = winston.createLogger({
   level: 'info', 
   format: winston.format.json(), 
   transports: [
@@ -18,4 +18,14 @@ if (process.env.NODE_ENV !== 'production') {
   }));
 }
 
-export default logger;
+ 
+
+export const logActivity = (action: 'signup' | 'login' | 'logout', email: string) => {
+    const messages = {
+        signup: `New User Registered successfully: ${email}`,
+        login: `User logged in successfully: ${email}`,
+        logout: `User logged out: ${email}`
+    };
+    
+    logger.info(messages[action]);
+};
