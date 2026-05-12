@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import ApiError from "./ApiError";
-import logger from "./logger";
+import { logger } from "./logger";
 
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
@@ -17,7 +17,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     else if (err instanceof Error) {
         message = err.message;
     }
-    logger.error(`${statusCode} - ${message} - ${req.method} - ${req.url}`);
+    logger.error(`${statusCode} - ${message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
 
     res.status(statusCode).json({
         success: false,

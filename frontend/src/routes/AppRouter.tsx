@@ -37,7 +37,7 @@ export default function AppRouter() {
   return (
     <Routes>
       {/* Root: redirect to student home for now */}
-      <Route path="/" element={<Navigate to="/student/dashboard" replace />} />
+      <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
 
       {/* Unified auth routes - role selected in form */}
       <Route path="/login" element={<Login />} />
