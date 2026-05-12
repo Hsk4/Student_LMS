@@ -39,7 +39,8 @@
     "tailwindcss": "^4.2.4",
     "uuid": "latest",
     "xlsx": "latest",
-    "zod": "latest"
+    "zod": "latest",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@tailwindcss/forms": "latest",

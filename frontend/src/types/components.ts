@@ -134,6 +134,24 @@ export interface CategoryItem {
   color: string
 }
 
+// Font and Notes typography helpers (used by Notes component and font store)
+export type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+
+export type FontOption = {
+  id: string
+  label: string
+  family: string
+  source: 'system' | 'uploaded'
+}
+
+export type NotesFontPreferences = {
+  bodyFont: string
+  codeFont: string
+  quoteFont: string
+  headingFonts: Record<HeadingTag, string>
+  headingColors: Record<HeadingTag, string>
+}
+
 // Student dashboard
 export interface StudentCourse {
   id: string
@@ -361,6 +379,7 @@ export interface AdminStudent {
   phone: string
   password: string
   homeroomTeacher: string
+  teacherId?: string
   semesterFees: number
   previousSchool: string
   guardianName: string

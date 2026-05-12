@@ -1,52 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Button from '@/components/common/Button'
-import { dummyStudents } from '@/data/adminStudents'
 import type { AdminStudent, AdminTeacher } from '@/types/components'
+import useAccountsStore from '@/stores/useAccountsStore'
 import { themeClasses } from '@/styles/theme'
 import { Search } from 'lucide-react'
 
 const Accounts: React.FC = () => {
   const [searchParams] = useSearchParams()
-  const [students, setStudents] = useState<AdminStudent[]>(dummyStudents)
-  const [teachers, setTeachers] = useState<AdminTeacher[]>([
-    {
-      id: 't-001',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
-      name: 'Dr. Aisha Rahman',
-      degree: 'Ph.D. in Computer Science',
-      subject: 'Data Structures',
-      batch: 'Batch 2023',
-      semester: '6th Semester',
-      attendance: 95,
-      joinedDate: '2020-08-15',
-      salary: 75000,
-      totalStudents: 45,
-      status: 'Active',
-      email: 'aisha.rahman@academics.edu',
-      phone: '+91-98765-43210',
-      experienceYears: 9,
-      department: 'Computer Science Department',
-    },
-    {
-      id: 't-002',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
-      name: 'Prof. Rajesh Kumar',
-      degree: 'M.Tech in Software Engineering',
-      subject: 'Database Management',
-      batch: 'Batch 2023, 2024',
-      semester: '4th, 6th Semester',
-      attendance: 88,
-      joinedDate: '2019-06-10',
-      salary: 65000,
-      totalStudents: 60,
-      status: 'Active',
-      email: 'rajesh.kumar@academics.edu',
-      phone: '+91-98765-43211',
-      experienceYears: 12,
-      department: 'Computer Science Department',
-    },
-  ])
+  const students = useAccountsStore((s) => s.students)
+  const teachers = useAccountsStore((s) => s.teachers)
+  const addStudentToStore = useAccountsStore((s) => s.addStudent)
+  const addTeacherToStore = useAccountsStore((s) => s.addTeacher)
 
   const [activeForm, setActiveForm] = useState<'student' | 'teacher' | null>(null)
   const [userType, setUserType] = useState<'all' | 'students' | 'teachers'>('all')
@@ -62,14 +27,12 @@ const Accounts: React.FC = () => {
   }, [searchParams])
 
   const handleAddStudent = (newStudent: Omit<AdminStudent, 'id'>) => {
-    const student: AdminStudent = { ...newStudent, id: `s-${Date.now()}` }
-    setStudents((s) => [...s, student])
+    addStudentToStore(newStudent)
     setActiveForm(null)
   }
 
-  const handleAddTeacher = (newTeacher: Omit<AdminTeacher, 'id'>) => {
-    const teacher: AdminTeacher = { ...newTeacher, id: `t-${Date.now()}` }
-    setTeachers((t) => [...t, teacher])
+  const handleAddTeacher = (newTeacher: Partial<AdminTeacher>) => {
+    addTeacherToStore(newTeacher)
     setActiveForm(null)
   }
 
@@ -221,6 +184,7 @@ const Accounts: React.FC = () => {
 
 /* Small inline Add Student form (moved from AddStudentModal) */
 const StudentAddForm: React.FC<{ onAdd: (s: Omit<AdminStudent, 'id'>) => void; onCancel?: () => void }> = ({ onAdd, onCancel }) => {
+  const teachersList = useAccountsStore((s) => s.teachers)
   const [formData, setFormData] = useState({
     name: '',
     studentId: '',
@@ -229,6 +193,7 @@ const StudentAddForm: React.FC<{ onAdd: (s: Omit<AdminStudent, 'id'>) => void; o
     phone: '',
     password: '',
     homeroomTeacher: '',
+    teacherId: '',
     semesterFees: 150000,
     previousSchool: '',
     class: '',
@@ -248,6 +213,14 @@ const StudentAddForm: React.FC<{ onAdd: (s: Omit<AdminStudent, 'id'>) => void; o
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     onAdd(formData)
+    // also update homeroomTeacher name if teacherId is selected
+    if (formData.teacherId) {
+      const t = teachersList.find((x) => x.id === formData.teacherId)
+      if (t) {
+        // ensure homeroomTeacher name matches selected teacher
+        formData.homeroomTeacher = t.name
+      }
+    }
     setFormData({
       name: '',
       studentId: '',
@@ -256,6 +229,7 @@ const StudentAddForm: React.FC<{ onAdd: (s: Omit<AdminStudent, 'id'>) => void; o
       phone: '',
       password: '',
       homeroomTeacher: '',
+      teacherId: '',
       semesterFees: 150000,
       previousSchool: '',
       class: '',
@@ -300,6 +274,15 @@ const StudentAddForm: React.FC<{ onAdd: (s: Omit<AdminStudent, 'id'>) => void; o
           <input name="homeroomTeacher" value={formData.homeroomTeacher} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
+          <label className={themeClasses.label}>Homeroom Teacher ID (optional)</label>
+          <select name="teacherId" value={formData.teacherId} onChange={handleChange} className={themeClasses.input}>
+            <option value="">-- select teacher --</option>
+            {teachersList.map((t) => (
+              <option key={t.id} value={t.id}>{`${t.name} (${t.id})`}</option>
+            ))}
+          </select>
+        </div>
+        <div>
           <label className={themeClasses.label}>Semester Fees *</label>
           <input type="number" name="semesterFees" value={formData.semesterFees} onChange={handleChange} required className={themeClasses.input} />
         </div>
@@ -324,8 +307,9 @@ const StudentAddForm: React.FC<{ onAdd: (s: Omit<AdminStudent, 'id'>) => void; o
 }
 
 /* Small inline Add Teacher form */
-const TeacherAddForm: React.FC<{ onAdd: (t: Omit<AdminTeacher, 'id'>) => void; onCancel?: () => void }> = ({ onAdd, onCancel }) => {
-  const [formData, setFormData] = useState({
+const TeacherAddForm: React.FC<{ onAdd: (t: Partial<AdminTeacher>) => void; onCancel?: () => void }> = ({ onAdd, onCancel }) => {
+  const [formData, setFormData] = useState<Partial<AdminTeacher>>({
+    id: '',
     name: '',
     degree: '',
     subject: '',
@@ -337,7 +321,7 @@ const TeacherAddForm: React.FC<{ onAdd: (t: Omit<AdminTeacher, 'id'>) => void; o
     totalStudents: 0,
     email: '',
     phone: '',
-    status: 'Active' as const,
+    status: 'Active',
     experienceYears: 1,
     department: '',
     image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
@@ -348,13 +332,14 @@ const TeacherAddForm: React.FC<{ onAdd: (t: Omit<AdminTeacher, 'id'>) => void; o
     setFormData((prev) => ({
       ...prev,
       [name]: name === 'experienceYears' || name === 'attendance' || name === 'salary' || name === 'totalStudents' ? parseFloat(value || '0') : value,
-    }))
+    } as Partial<AdminTeacher>))
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     onAdd(formData)
     setFormData({
+      id: '',
       name: '',
       degree: '',
       subject: '',
@@ -377,8 +362,12 @@ const TeacherAddForm: React.FC<{ onAdd: (t: Omit<AdminTeacher, 'id'>) => void; o
     <form onSubmit={handleSubmit} className="space-y-3">
       <div className="grid grid-cols-1 gap-3">
         <div>
+          <label className={themeClasses.label}>Teacher ID *</label>
+          <input name="id" value={formData.id as string} onChange={handleChange} placeholder="e.g., TCH-2026-001" required className={themeClasses.input} />
+        </div>
+        <div>
           <label className={themeClasses.label}>Full Name *</label>
-          <input name="name" value={formData.name} onChange={handleChange} required className={themeClasses.input} />
+          <input name="name" value={formData.name as string} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
           <label className={themeClasses.label}>Degree *</label>
