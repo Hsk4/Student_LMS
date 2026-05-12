@@ -1,0 +1,10 @@
+{"level":"info","message":"New User Registered successfully: saffan@example.com"}
+{"level":"info","message":"New User Registered successfully: ali@example.com"}
+{"level":"error","message":"409 - This Email is already exicts! - /api/v1/admin/add-teacher - POST - ::1"}
+{"level":"error","message":"400 - Fields Missing! - /api/v1/admin/add-teacher - POST - ::1"}
+{"level":"error","message":"409 -  This Email is already exicts! - /api/v1/admin/add-student - POST - ::1"}
+{"level":"error","message":"409 -  This Email is already exicts! - /api/v1/admin/add-student - POST - ::1"}
+{"level":"error","message":"400 - Fields Missing! - /api/v1/admin/add-student - POST - ::1"}
+{"level":"info","message":"New User Registered successfully: muhammadsafwan@gmail.com"}
+{"level":"error","message":"400 - Fields Missing! - /api/v1/admin/add-admin - POST - ::1"}
+{"level":"error","message":"409 - Already Exists! - /api/v1/admin/add-admin - POST - ::1"}

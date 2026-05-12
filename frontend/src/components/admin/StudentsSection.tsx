@@ -46,7 +46,9 @@ const StudentsSection: React.FC<AdminStudentsSectionProps> = ({ students }) => {
     {
       header: 'Roll Number',
       className: 'whitespace-nowrap',
-      render: (student) => <span className="font-mono text-slate-700">{student.rollNumber}</span>,
+      render: (student) =>   <span className={`${themeClasses.badgeWarning} inline-flex items-center gap-1`}>
+          ₹{student.rollNumber.toLocaleString()}
+        </span>,
     },
     {
       header: 'Email',
@@ -56,7 +58,9 @@ const StudentsSection: React.FC<AdminStudentsSectionProps> = ({ students }) => {
     {
       header: 'Phone',
       className: 'whitespace-nowrap',
-      render: (student) => <span className="text-slate-600">{student.phone}</span>,
+      render: (student) =>   <span className={`${themeClasses.badgeWarning} inline-flex items-center gap-1`}>
+          ₹{student.phone.toLocaleString()}
+        </span>,
     },
     {
       header: 'Homeroom Teacher',
