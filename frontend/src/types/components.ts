@@ -66,9 +66,11 @@ export interface ToastProps {
   message: string
   type?: 'success' | 'error' | 'info'
   duration?: number
+  onClose?: () => void
 }
 
 export interface SectionCardProps {
+  id?: string
   title: string
   description?: string
   badge?: string

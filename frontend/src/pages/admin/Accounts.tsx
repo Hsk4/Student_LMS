@@ -5,6 +5,84 @@ import type { AdminStudent, AdminTeacher } from '@/types/components'
 import useAccountsStore from '@/stores/useAccountsStore'
 import { themeClasses } from '@/styles/theme'
 import { Search } from 'lucide-react'
+import { createStudent, createTeacher, type CreateStudentPayload, type CreateTeacherPayload } from '@/services/adminAccountsApi'
+import Toast from '@/components/common/Toast'
+
+const generateNextPrefixedId = (prefix: 'std' | 'tch', existingIds: Array<string | undefined>) => {
+  const highest = existingIds.reduce((currentHighest, currentId) => {
+    if (!currentId) return currentHighest
+
+    const match = currentId.trim().toLowerCase().match(new RegExp('^' + prefix + '(\\d+)$'))
+    if (!match) return currentHighest
+
+    const parsed = Number.parseInt(match[1] ?? '0', 10)
+    return Number.isNaN(parsed) ? currentHighest : Math.max(currentHighest, parsed)
+  }, 0)
+
+  return `${prefix}${String(highest + 1).padStart(3, '0')}`
+}
+
+const mapCreatedStudentToUi = (student: {
+  FullName: string
+  StudentID: string
+  RollNumber: string
+  Email: string
+  Phone: string
+  HomeroomTeacher: string
+  SemesterFees: number
+  PreviousSchool: string
+}): Omit<AdminStudent, 'id'> => ({
+  name: student.FullName,
+  studentId: student.StudentID,
+  rollNumber: student.RollNumber,
+  email: student.Email,
+  phone: student.Phone,
+  password: '',
+  homeroomTeacher: student.HomeroomTeacher,
+  teacherId: undefined,
+  semesterFees: student.SemesterFees,
+  previousSchool: student.PreviousSchool,
+  guardianName: 'N/A',
+  guardianPhone: 'N/A',
+  status: 'Active',
+  gpa: 0,
+  joinDate: new Date().toISOString().split('T')[0],
+  class: 'N/A',
+  image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+})
+
+const mapCreatedTeacherToUi = (teacher: {
+  FullName: string
+  TeacherID: string
+  Degree: string
+  Subject: string
+  Batch: string
+  Semester: string
+  JoinedDate: string
+  Salary: number
+  TotalStudents: number
+  Email: string
+  Phone: string
+  Department: string
+  PreviousSchool: string
+}): AdminTeacher => ({
+  id: teacher.TeacherID,
+  image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
+  name: teacher.FullName,
+  degree: teacher.Degree,
+  subject: teacher.Subject,
+  batch: teacher.Batch,
+  semester: teacher.Semester,
+  attendance: 0,
+  joinedDate: teacher.JoinedDate,
+  salary: teacher.Salary,
+  totalStudents: teacher.TotalStudents,
+  status: 'Active',
+  email: teacher.Email,
+  phone: teacher.Phone,
+  experienceYears: 0,
+  department: teacher.Department,
+})
 
 const Accounts: React.FC = () => {
   const [searchParams] = useSearchParams()
@@ -17,6 +95,14 @@ const Accounts: React.FC = () => {
   const [userType, setUserType] = useState<'all' | 'students' | 'teachers'>('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'Active' | 'Inactive'>('all')
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null)
+
+  useEffect(() => {
+    if (!toast) return
+
+    const timeout = window.setTimeout(() => setToast(null), 4000)
+    return () => window.clearTimeout(timeout)
+  }, [toast])
 
   // Auto-open form if sidebar link is clicked
   useEffect(() => {
@@ -26,14 +112,28 @@ const Accounts: React.FC = () => {
     }
   }, [searchParams])
 
-  const handleAddStudent = (newStudent: Omit<AdminStudent, 'id'>) => {
-    addStudentToStore(newStudent)
-    setActiveForm(null)
+  const handleAddStudent = async (payload: CreateStudentPayload) => {
+    try {
+      const createdStudent = await createStudent(payload)
+      addStudentToStore(mapCreatedStudentToUi(createdStudent))
+      setActiveForm(null)
+      setToast({ message: `Student ${createdStudent.StudentID} saved successfully.`, type: 'success' })
+    } catch (error) {
+      setToast({ message: error instanceof Error ? error.message : 'Failed to save student.', type: 'error' })
+      throw error
+    }
   }
 
-  const handleAddTeacher = (newTeacher: Partial<AdminTeacher>) => {
-    addTeacherToStore(newTeacher)
-    setActiveForm(null)
+  const handleAddTeacher = async (payload: CreateTeacherPayload) => {
+    try {
+      const createdTeacher = await createTeacher(payload)
+      addTeacherToStore(mapCreatedTeacherToUi(createdTeacher))
+      setActiveForm(null)
+      setToast({ message: `Teacher ${createdTeacher.TeacherID} saved successfully.`, type: 'success' })
+    } catch (error) {
+      setToast({ message: error instanceof Error ? error.message : 'Failed to save teacher.', type: 'error' })
+      throw error
+    }
   }
 
   // Filter logic
@@ -62,6 +162,8 @@ const Accounts: React.FC = () => {
         <h1 className={themeClasses.heading2}>Accounts</h1>
         <p className={themeClasses.textSm}>Manage all Students and Teachers</p>
       </div>
+
+      {toast ? <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} /> : null}
 
       {/* Add Student/Teacher Forms */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -182,64 +284,61 @@ const Accounts: React.FC = () => {
   )
 }
 
-/* Small inline Add Student form (moved from AddStudentModal) */
-const StudentAddForm: React.FC<{ onAdd: (s: Omit<AdminStudent, 'id'>) => void; onCancel?: () => void }> = ({ onAdd, onCancel }) => {
-  const teachersList = useAccountsStore((s) => s.teachers)
-  const [formData, setFormData] = useState({
-    name: '',
-    studentId: '',
-    rollNumber: '',
-    email: '',
-    phone: '',
-    password: '',
-    homeroomTeacher: '',
-    teacherId: '',
-    semesterFees: 150000,
-    previousSchool: '',
-    class: '',
-    guardianName: '',
-    guardianPhone: '',
-    status: 'Active' as const,
-    gpa: 3.5,
-    joinDate: new Date().toISOString().split('T')[0],
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+/* Small inline Add Student form (backend-shaped fields) */
+const StudentAddForm: React.FC<{ onAdd: (s: CreateStudentPayload) => Promise<void> | void; onCancel?: () => void }> = ({ onAdd, onCancel }) => {
+  const studentsList = useAccountsStore((s) => s.students)
+  const [formData, setFormData] = useState<CreateStudentPayload>({
+    FullName: '',
+    StudentID: '',
+    RollNumber: '',
+    Email: '',
+    Phone: '',
+    Password: '',
+    HomeroomTeacher: '',
+    SemesterFees: 150000,
+    PreviousSchool: '',
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: name === 'gpa' || name === 'semesterFees' ? parseFloat(value) : value }))
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === 'SemesterFees' ? Number(value) : value,
+    }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleGenerateStudentId = () => {
+    setFormData((prev) => ({
+      ...prev,
+      StudentID: generateNextPrefixedId('std', studentsList.map((student) => student.studentId)),
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    onAdd(formData)
-    // also update homeroomTeacher name if teacherId is selected
-    if (formData.teacherId) {
-      const t = teachersList.find((x) => x.id === formData.teacherId)
-      if (t) {
-        // ensure homeroomTeacher name matches selected teacher
-        formData.homeroomTeacher = t.name
-      }
+    const studentId = formData.StudentID.trim() || generateNextPrefixedId('std', studentsList.map((student) => student.studentId))
+
+    try {
+      await onAdd({
+        ...formData,
+        StudentID: studentId,
+        SemesterFees: Number(formData.SemesterFees),
+      })
+
+      setFormData({
+        FullName: '',
+        StudentID: '',
+        RollNumber: '',
+        Email: '',
+        Phone: '',
+        Password: '',
+        HomeroomTeacher: '',
+        SemesterFees: 150000,
+        PreviousSchool: '',
+      })
+    } catch {
+      // Toast state is handled by the parent Accounts page.
     }
-    setFormData({
-      name: '',
-      studentId: '',
-      rollNumber: '',
-      email: '',
-      phone: '',
-      password: '',
-      homeroomTeacher: '',
-      teacherId: '',
-      semesterFees: 150000,
-      previousSchool: '',
-      class: '',
-      guardianName: '',
-      guardianPhone: '',
-      status: 'Active',
-      gpa: 3.5,
-      joinDate: new Date().toISOString().split('T')[0],
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
-    })
   }
 
   return (
@@ -247,48 +346,45 @@ const StudentAddForm: React.FC<{ onAdd: (s: Omit<AdminStudent, 'id'>) => void; o
       <div className="grid grid-cols-1 gap-3">
         <div>
           <label className={themeClasses.label}>Full Name *</label>
-          <input name="name" value={formData.name} onChange={handleChange} required className={themeClasses.input} />
+          <input name="FullName" value={formData.FullName} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
-          <label className={themeClasses.label}>Student ID *</label>
-          <input name="studentId" value={formData.studentId} onChange={handleChange} placeholder="e.g., STU-2023-001" required className={themeClasses.input} />
+          <div className="mb-1 flex items-center justify-between gap-3">
+            <label className={themeClasses.label}>Student ID *</label>
+            <Button type="button" variant="secondary" onClick={handleGenerateStudentId} className="px-3 py-1 text-xs">
+              Generate ID
+            </Button>
+          </div>
+          <input name="StudentID" value={formData.StudentID} onChange={handleChange} placeholder="Click Generate ID" required readOnly className={themeClasses.input} />
+          <p className="mt-1 text-xs text-slate-500">Generated IDs use the <span className="font-semibold">std</span> prefix like <span className="font-semibold">std001</span>.</p>
         </div>
         <div>
           <label className={themeClasses.label}>Roll Number *</label>
-          <input name="rollNumber" value={formData.rollNumber} onChange={handleChange} placeholder="e.g., 001" required className={themeClasses.input} />
+          <input name="RollNumber" value={formData.RollNumber} onChange={handleChange} placeholder="e.g., 001" required className={themeClasses.input} />
         </div>
         <div>
           <label className={themeClasses.label}>Email *</label>
-          <input type="email" name="email" value={formData.email} onChange={handleChange} required className={themeClasses.input} />
+          <input type="email" name="Email" value={formData.Email} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
           <label className={themeClasses.label}>Phone *</label>
-          <input name="phone" value={formData.phone} onChange={handleChange} required className={themeClasses.input} />
+          <input name="Phone" value={formData.Phone} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
           <label className={themeClasses.label}>Password *</label>
-          <input type="password" name="password" value={formData.password} onChange={handleChange} required className={themeClasses.input} />
+          <input type="password" name="Password" value={formData.Password} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
           <label className={themeClasses.label}>Homeroom Teacher *</label>
-          <input name="homeroomTeacher" value={formData.homeroomTeacher} onChange={handleChange} required className={themeClasses.input} />
-        </div>
-        <div>
-          <label className={themeClasses.label}>Homeroom Teacher ID (optional)</label>
-          <select name="teacherId" value={formData.teacherId} onChange={handleChange} className={themeClasses.input}>
-            <option value="">-- select teacher --</option>
-            {teachersList.map((t) => (
-              <option key={t.id} value={t.id}>{`${t.name} (${t.id})`}</option>
-            ))}
-          </select>
+          <input name="HomeroomTeacher" value={formData.HomeroomTeacher} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
           <label className={themeClasses.label}>Semester Fees *</label>
-          <input type="number" name="semesterFees" value={formData.semesterFees} onChange={handleChange} required className={themeClasses.input} />
+          <input type="number" name="SemesterFees" value={formData.SemesterFees} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
           <label className={themeClasses.label}>Previous School *</label>
-          <input name="previousSchool" value={formData.previousSchool} onChange={handleChange} required className={themeClasses.input} />
+          <input name="PreviousSchool" value={formData.PreviousSchool} onChange={handleChange} required className={themeClasses.input} />
         </div>
       </div>
 
@@ -306,112 +402,138 @@ const StudentAddForm: React.FC<{ onAdd: (s: Omit<AdminStudent, 'id'>) => void; o
   )
 }
 
-/* Small inline Add Teacher form */
-const TeacherAddForm: React.FC<{ onAdd: (t: Partial<AdminTeacher>) => void; onCancel?: () => void }> = ({ onAdd, onCancel }) => {
-  const [formData, setFormData] = useState<Partial<AdminTeacher>>({
-    id: '',
-    name: '',
-    degree: '',
-    subject: '',
-    batch: '',
-    semester: '',
-    attendance: 85,
-    joinedDate: new Date().toISOString().split('T')[0],
-    salary: 60000,
-    totalStudents: 0,
-    email: '',
-    phone: '',
-    status: 'Active',
-    experienceYears: 1,
-    department: '',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
+/* Small inline Add Teacher form (backend-shaped fields) */
+const TeacherAddForm: React.FC<{ onAdd: (t: CreateTeacherPayload) => Promise<void> | void; onCancel?: () => void }> = ({ onAdd, onCancel }) => {
+  const teachersList = useAccountsStore((s) => s.teachers)
+  const [formData, setFormData] = useState<CreateTeacherPayload>({
+    FullName: '',
+    TeacherID: '',
+    Degree: '',
+    Subject: '',
+    Batch: '',
+    Semester: '',
+    JoinedDate: new Date().toISOString().split('T')[0],
+    Salary: 60000,
+    TotalStudents: 0,
+    Email: '',
+    Phone: '',
+    Password: '',
+    Department: '',
+    PreviousSchool: '',
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
-      [name]: name === 'experienceYears' || name === 'attendance' || name === 'salary' || name === 'totalStudents' ? parseFloat(value || '0') : value,
-    } as Partial<AdminTeacher>))
+      [name]: name === 'Salary' || name === 'TotalStudents' ? Number(value) : value,
+    }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleGenerateTeacherId = () => {
+    setFormData((prev) => ({
+      ...prev,
+      TeacherID: generateNextPrefixedId('tch', teachersList.map((teacher) => teacher.id)),
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    onAdd(formData)
-    setFormData({
-      id: '',
-      name: '',
-      degree: '',
-      subject: '',
-      batch: '',
-      semester: '',
-      attendance: 85,
-      joinedDate: new Date().toISOString().split('T')[0],
-      salary: 60000,
-      totalStudents: 0,
-      email: '',
-      phone: '',
-      status: 'Active',
-      experienceYears: 1,
-      department: '',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
-    })
+    const teacherId = formData.TeacherID.trim() || generateNextPrefixedId('tch', teachersList.map((teacher) => teacher.id))
+
+    try {
+      await onAdd({
+        ...formData,
+        TeacherID: teacherId,
+        Salary: Number(formData.Salary),
+        TotalStudents: Number(formData.TotalStudents),
+      })
+
+      setFormData({
+        FullName: '',
+        TeacherID: '',
+        Degree: '',
+        Subject: '',
+        Batch: '',
+        Semester: '',
+        JoinedDate: new Date().toISOString().split('T')[0],
+        Salary: 60000,
+        TotalStudents: 0,
+        Email: '',
+        Phone: '',
+        Password: '',
+        Department: '',
+        PreviousSchool: '',
+      })
+    } catch {
+      // Toast state is handled by the parent Accounts page.
+    }
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
       <div className="grid grid-cols-1 gap-3">
         <div>
-          <label className={themeClasses.label}>Teacher ID *</label>
-          <input name="id" value={formData.id as string} onChange={handleChange} placeholder="e.g., TCH-2026-001" required className={themeClasses.input} />
+          <label className={themeClasses.label}>Full Name *</label>
+          <input name="FullName" value={formData.FullName} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
-          <label className={themeClasses.label}>Full Name *</label>
-          <input name="name" value={formData.name as string} onChange={handleChange} required className={themeClasses.input} />
+          <div className="mb-1 flex items-center justify-between gap-3">
+            <label className={themeClasses.label}>Teacher ID *</label>
+            <Button type="button" variant="secondary" onClick={handleGenerateTeacherId} className="px-3 py-1 text-xs">
+              Generate ID
+            </Button>
+          </div>
+          <input name="TeacherID" value={formData.TeacherID} onChange={handleChange} placeholder="Click Generate ID" required readOnly className={themeClasses.input} />
+          <p className="mt-1 text-xs text-slate-500">Generated IDs use the <span className="font-semibold">tch</span> prefix like <span className="font-semibold">tch001</span>.</p>
         </div>
         <div>
           <label className={themeClasses.label}>Degree *</label>
-          <input name="degree" value={formData.degree} onChange={handleChange} placeholder="e.g., Ph.D. in Computer Science" required className={themeClasses.input} />
+          <input name="Degree" value={formData.Degree} onChange={handleChange} placeholder="e.g., Ph.D. in Computer Science" required className={themeClasses.input} />
         </div>
         <div>
           <label className={themeClasses.label}>Subject *</label>
-          <input name="subject" value={formData.subject} onChange={handleChange} required className={themeClasses.input} />
+          <input name="Subject" value={formData.Subject} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
           <label className={themeClasses.label}>Batch *</label>
-          <input name="batch" value={formData.batch} onChange={handleChange} placeholder="e.g., Batch 2023, 2024" required className={themeClasses.input} />
+          <input name="Batch" value={formData.Batch} onChange={handleChange} placeholder="e.g., Batch 2023, 2024" required className={themeClasses.input} />
         </div>
         <div>
           <label className={themeClasses.label}>Semester *</label>
-          <input name="semester" value={formData.semester} onChange={handleChange} placeholder="e.g., 4th, 6th Semester" required className={themeClasses.input} />
-        </div>
-        <div>
-          <label className={themeClasses.label}>Attendance % *</label>
-          <input type="number" name="attendance" value={formData.attendance} onChange={handleChange} min="0" max="100" required className={themeClasses.input} />
+          <input name="Semester" value={formData.Semester} onChange={handleChange} placeholder="e.g., 4th, 6th Semester" required className={themeClasses.input} />
         </div>
         <div>
           <label className={themeClasses.label}>Joined Date *</label>
-          <input type="date" name="joinedDate" value={formData.joinedDate} onChange={handleChange} required className={themeClasses.input} />
+          <input type="date" name="JoinedDate" value={formData.JoinedDate} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
           <label className={themeClasses.label}>Salary *</label>
-          <input type="number" name="salary" value={formData.salary} onChange={handleChange} required className={themeClasses.input} />
+          <input type="number" name="Salary" value={formData.Salary} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
           <label className={themeClasses.label}>Total Students *</label>
-          <input type="number" name="totalStudents" value={formData.totalStudents} onChange={handleChange} required className={themeClasses.input} />
+          <input type="number" name="TotalStudents" value={formData.TotalStudents} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
-          <label className={themeClasses.label}>Email</label>
-          <input type="email" name="email" value={formData.email} onChange={handleChange} className={themeClasses.input} />
+          <label className={themeClasses.label}>Email *</label>
+          <input type="email" name="Email" value={formData.Email} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
-          <label className={themeClasses.label}>Phone</label>
-          <input name="phone" value={formData.phone} onChange={handleChange} className={themeClasses.input} />
+          <label className={themeClasses.label}>Phone *</label>
+          <input name="Phone" value={formData.Phone} onChange={handleChange} required className={themeClasses.input} />
         </div>
         <div>
-          <label className={themeClasses.label}>Department</label>
-          <input name="department" value={formData.department} onChange={handleChange} className={themeClasses.input} />
+          <label className={themeClasses.label}>Password *</label>
+          <input type="password" name="Password" value={formData.Password} onChange={handleChange} required className={themeClasses.input} />
+        </div>
+        <div>
+          <label className={themeClasses.label}>Department *</label>
+          <input name="Department" value={formData.Department} onChange={handleChange} required className={themeClasses.input} />
+        </div>
+        <div>
+          <label className={themeClasses.label}>Previous School *</label>
+          <input name="PreviousSchool" value={formData.PreviousSchool} onChange={handleChange} required className={themeClasses.input} />
         </div>
       </div>
 

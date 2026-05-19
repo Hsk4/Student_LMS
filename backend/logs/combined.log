@@ -8,3 +8,12 @@
 {"level":"info","message":"New User Registered successfully: muhammadsafwan@gmail.com"}
 {"level":"error","message":"400 - Fields Missing! - /api/v1/admin/add-admin - POST - ::1"}
 {"level":"error","message":"409 - Already Exists! - /api/v1/admin/add-admin - POST - ::1"}
+{"level":"error","message":"400 - Invalid role_id format. Expected student (std123) or teacher (tch123) id. - /api/v1/auth/login - POST - ::1"}
+{"level":"error","message":"500 - JWT_SECRET is not configured - /api/v1/auth/login - POST - ::1"}
+{"level":"error","message":"500 - jwt.sign is not a function - /api/v1/auth/login - POST - ::1"}
+{"level":"info","message":"New User Registered successfully: hsk42116@gmail.com"}
+{"level":"error","message":"409 -  This Email is already exicts! - /api/v1/admin/add-student - POST - ::1"}
+{"level":"info","message":"New User Registered successfully: hsk421116@gmail.com"}
+{"level":"error","message":"401 - Invalid credentials - /api/v1/auth/login - POST - ::1"}
+{"level":"info","message":"New User Registered successfully: hsk42116@gmail.com"}
+{"level":"info","message":"New User Registered successfully: Usama@gmail.com"}

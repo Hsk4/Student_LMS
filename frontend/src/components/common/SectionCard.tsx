@@ -2,6 +2,7 @@ import React from 'react'
 import type { SectionCardProps } from '@/types/components'
 
 const SectionCard: React.FC<SectionCardProps> = ({
+  id,
   title,
   description,
   badge,
@@ -12,7 +13,7 @@ const SectionCard: React.FC<SectionCardProps> = ({
   action,
 }) => {
   return (
-    <section className={`theme-card ${className}`}>
+    <section id={id} className={`theme-card ${className}`}>
       <div className={`flex items-center justify-between gap-4 theme-modal-header ${headerClassName}`}>
         <div>
           <h2 className="theme-h4">{title}</h2>

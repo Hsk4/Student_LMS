@@ -47,16 +47,16 @@ export default function StudentDashboard() {
               See what you're studying now, who is teaching it, and the assignments waiting for you.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(140px,1fr))', gap: 12 }}>
-            <div style={{ borderRadius: 16, backgroundColor: 'rgba(255,255,255,0.08)', padding: 12, backdropFilter: 'blur(6px)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(120px,1fr))', gap: 10 }}>
+            <div style={{ borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.08)', padding: 10, backdropFilter: 'blur(6px)' }}>
               <p style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.14em', color: 'rgba(255,255,255,0.7)' }}>Courses</p>
               <p style={{ marginTop: 6, fontSize: 22, fontWeight: 700 }}>{courses.length}</p>
             </div>
-            <div style={{ borderRadius: 16, backgroundColor: 'rgba(255,255,255,0.08)', padding: 12, backdropFilter: 'blur(6px)' }}>
+            <div style={{ borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.08)', padding: 10, backdropFilter: 'blur(6px)' }}>
               <p style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.14em', color: 'rgba(255,255,255,0.7)' }}>Assignments</p>
               <p style={{ marginTop: 6, fontSize: 22, fontWeight: 700 }}>{assignments.length}</p>
             </div>
-            <div style={{ borderRadius: 16, backgroundColor: 'rgba(255,255,255,0.08)', padding: 12, backdropFilter: 'blur(6px)' }}>
+            <div style={{ borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.08)', padding: 10, backdropFilter: 'blur(6px)' }}>
               <p style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.14em', color: 'rgba(255,255,255,0.7)' }}>Progress</p>
               <p style={{ marginTop: 6, fontSize: 22, fontWeight: 700 }}>64%</p>
             </div>
@@ -64,16 +64,16 @@ export default function StudentDashboard() {
         </div>
       </section>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: 24 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 18 }}>
         <SectionCard
           title="My Courses"
           description="Courses currently assigned to you"
           badge={`${courses.length} Active`}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 16 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: 12 }}>
             {courses.map((course) => (
-              <article key={course.id} className="theme-card" style={{ padding: 20 }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <article key={course.id} className="theme-card" style={{ padding: 16 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
                     <div style={{ width: 48, height: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 12, backgroundColor: '#e0e7ff', color: '#4f46e5' }}>
                       <BookOpen size={20} />
@@ -90,12 +90,12 @@ export default function StudentDashboard() {
                     </div>
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(140px,1fr))', gap: 12 }}>
-                    <div style={{ borderRadius: 12, background: 'white', padding: 12 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(120px,1fr))', gap: 10 }}>
+                    <div style={{ borderRadius: 12, background: 'white', padding: 10 }}>
                       <p style={{ fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.14em', color: '#64748b' }}>Progress</p>
                       <p style={{ marginTop: 6, fontSize: 22, fontWeight: 700, color: '#0f172a' }}>{course.progress}%</p>
                     </div>
-                    <div style={{ borderRadius: 12, background: 'white', padding: 12 }}>
+                    <div style={{ borderRadius: 12, background: 'white', padding: 10 }}>
                       <p style={{ fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.14em', color: '#64748b' }}>Assignments</p>
                       <p style={{ marginTop: 6, fontSize: 22, fontWeight: 700, color: '#0f172a' }}>{course.assignmentCount}</p>
                     </div>
@@ -123,8 +123,8 @@ export default function StudentDashboard() {
           badge="Today"
           action={<Badge label="Live" type="success" />}
           >
-            <div style={{ padding: 16, display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))' }}>
-              <div className="theme-card" style={{ padding: 20, borderRadius: 16 }}>
+            <div style={{ padding: 12, display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))' }}>
+              <div className="theme-card" style={{ padding: 16, borderRadius: 14 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <div style={{ borderRadius: 12, backgroundColor: '#eef2ff', padding: 12, color: '#4f46e5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <CalendarDays size={18} />
@@ -135,7 +135,7 @@ export default function StudentDashboard() {
                   </div>
                 </div>
               </div>
-              <div className="theme-card" style={{ padding: 20, borderRadius: 16 }}>
+              <div className="theme-card" style={{ padding: 16, borderRadius: 14 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <div style={{ borderRadius: 12, backgroundColor: '#ecfdf5', padding: 12, color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <GraduationCap size={18} />
@@ -146,7 +146,7 @@ export default function StudentDashboard() {
                   </div>
                 </div>
               </div>
-              <div className="theme-card" style={{ padding: 20, borderRadius: 16 }}>
+              <div className="theme-card" style={{ padding: 16, borderRadius: 14 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <div style={{ borderRadius: 12, backgroundColor: '#fffbeb', padding: 12, color: '#b45309', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <ClipboardList size={18} />
